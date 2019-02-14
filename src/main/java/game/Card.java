@@ -18,12 +18,12 @@ public class Card {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Card name: " + name);
-        sb.append("Card type: " + type);
-        sb.append("Card age: " + age);
-        if(!cost.isEmpty()) {
+        sb.append("Card name: " + name + "\n");
+        sb.append("Card type: " + type + "\n");
+        sb.append("Card age: " + age + "\n");
+        if(cost != null && !cost.isEmpty()) {
             for(Map.Entry<Resources, Integer> entry: cost.entrySet()) {
-                sb.append(entry.getKey() + ": " + entry.getValue());
+                sb.append(entry.getKey() + ": " + entry.getValue() + "\n");
             }
         }
         return sb.toString();

@@ -8,13 +8,13 @@ public class Player {
     private List<Card> hand;
     private List<Card> oldHand;
     private Map<Resources, Integer> resources;
-    private short gold;
-    private short victory;
-    private short battle;
+    private int gold;
+    private int victory;
+    private int battle;
     private Player playerLeft;
     private Player playerRight;
 
-    public Player(Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, short gold, short victory, short battle, Player playerLeft, Player playerRight) {
+    public Player(Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, int gold, int victory, int battle, Player playerLeft, Player playerRight) {
         this.playerBoard = playerBoard;
         this.hand = hand;
         this.oldHand = oldHand;
@@ -34,17 +34,24 @@ public class Player {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Board: " + playerBoard.toString());
-        sb.append("Gold: " + gold);
-        sb.append("Victory points: " + victory);
-        sb.append("Battle points: " + battle);
-        for (Map.Entry<Resources, Integer> map: resources.entrySet()
-             ) {
-            sb.append(map.getKey() + ": " + map.getValue());
+        sb.append("Gold: " + gold + "\n");
+        sb.append("Victory points: " + victory + "\n");
+        sb.append("Battle points: " + battle + "\n");
+        if(resources != null && !resources.isEmpty()) {
+            sb.append("Resources: ");
+            for (Map.Entry<Resources, Integer> map: resources.entrySet()
+            ) {
+                sb.append(map.getKey() + ": " + map.getValue() + "\n");
+            }
         }
-        for (Card c: hand
-             ) {
-            sb.append(c.toString());
+        if(hand != null && !hand.isEmpty()) {
+            sb.append("Hand: ");
+            for (Card c: hand
+            ) {
+                sb.append(c.toString());
+            }
         }
+
 
         return sb.toString();
     }

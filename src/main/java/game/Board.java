@@ -16,12 +16,14 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Wonder: " + this.name);
-        sb.append("Own resource: " + this.boardResource);
-        sb.append("Cards played: ");
-        for (Card c: this.cardsPlayed
-             ) {
-            sb.append(c.toString());
+        sb.append("Wonder: " + this.name + "\n");
+        sb.append("Own resource: " + this.boardResource + "\n");
+        if(cardsPlayed != null) {
+            sb.append("Cards played: ");
+            for (Card c: this.cardsPlayed
+            ) {
+                sb.append(c.toString() + "\n");
+            }
         }
         return sb.toString();
     }
