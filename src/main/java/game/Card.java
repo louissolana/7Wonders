@@ -32,4 +32,16 @@ public class Card {
     public String getName() {
         return name;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Map<Resources, Integer> getCost() {
+        return cost;
+    }
+
+    public int getAge() {
+        return age;
+    }
 }

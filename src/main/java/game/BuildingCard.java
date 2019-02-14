@@ -10,4 +10,8 @@ public class BuildingCard extends Card {
         super(name, type, resources, age);
         this.prebuild = builds;
     }
+
+    public BuildingCard getPrebuild() {
+        return prebuild;
+    }
 }
