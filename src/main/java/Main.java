@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        Map<Resources, Integer> map1 = new HashMap<Resources, Integer>();
-        map1.put(Resources.GOLD, 1);
+        List<Cost> map1 = new ArrayList<Cost>();
+        map1.add(new Cost(Resources.GOLD, 1));
 
-        Map<Resources, Integer> map2 = new HashMap<Resources, Integer>();
-        map2.put(Resources.WOOD, 2);
+        List<Cost> map2 = new ArrayList<Cost>();
+        map2.add(new Cost(Resources.WOOD, 2));
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
         Card c2 = new Card("Marché", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);

@@ -1,6 +1,9 @@
 package client;
 
+import game.Card;
 import game.Player;
+
+import java.util.Scanner;
 
 public class Client {
     private int id;
@@ -47,5 +50,19 @@ public class Client {
     public String playCard() {
 
         return "";
+    }
+
+    /**
+     * Allows to choose a card through user input, later decided by bot
+     * @return Card
+     */
+    public Card chooseCard() {
+        for (int i = 0; i < player.getHand().size(); ++i) {
+            System.out.println(i + ": " + player.getHand().get(i).toString());
+        }
+        System.out.println("Enter number of picked card");
+        Scanner entry = new Scanner(System.in);
+        String line = entry.nextLine();
+        return null;
     }
 }

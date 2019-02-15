@@ -27,4 +27,16 @@ public class Board {
         }
         return sb.toString();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Resources getBoardResource() {
+        return boardResource;
+    }
+
+    public List<Card> getCardsPlayed() {
+        return cardsPlayed;
+    }
 }

@@ -26,8 +26,8 @@ public class Player {
         this.playerRight = playerRight;
     }
 
-    public Card playCard() {
-        return null;
+    public List<Card> getHand() {
+        return hand;
     }
 
     @Override

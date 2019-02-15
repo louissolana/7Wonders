@@ -1,16 +1,14 @@
 package game;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
     Card c1, c2;
-    Map<Resources, Integer> map;
+    List<Cost> map;
 
 
     @Test
@@ -23,15 +21,15 @@ class CardTest {
 
     @Test
     public void checkCard2() {
-        map = new HashMap<Resources, Integer>();
-        map.put(Resources.CLAY, 2);
+        map = new ArrayList<Cost>();
+        map.add(new Cost(Resources.CLAY, 2));
         c2 = new Card("Caserne", Type.MILITARY, map, 1);
 
         assertEquals(c2.getAge(), 1);
         assertEquals(c2.getName(), "Caserne");
         assertEquals(c2.getType(), Type.MILITARY);
 
-        assertTrue(c2.getCost().keySet().contains(Resources.CLAY));
-        assertTrue(c2.getCost().values().contains(2));
+        assertEquals(c2.getCost().get(0).getRes(), Resources.CLAY);
+        assertEquals(c2.getCost().get(0).getQuant(), 2);
     }
 }

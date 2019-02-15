@@ -1,14 +1,15 @@
 package game;
 
+import java.util.List;
 import java.util.Map;
 
 public class Card {
     private String name;
     private Type type;
-    private Map<Resources, Integer> cost; // can be null
+    private List<Cost> cost; // can be null
     private int age; // 1, 2, 3
 
-    public Card(String name, Type type, Map<Resources, Integer> resources, int age) {
+    public Card(String name, Type type, List<Cost> resources, int age) {
         this.name = name;
         this.type = type;
         this.cost = resources;
@@ -22,8 +23,8 @@ public class Card {
         sb.append("Card type: " + type + "\n");
         sb.append("Card age: " + age + "\n");
         if(cost != null && !cost.isEmpty()) {
-            for(Map.Entry<Resources, Integer> entry: cost.entrySet()) {
-                sb.append(entry.getKey() + ": " + entry.getValue() + "\n");
+            for(Cost co: cost) {
+                sb.append(co.getRes() + ": " + co.getQuant() + "\n");
             }
         }
         return sb.toString();
@@ -37,7 +38,7 @@ public class Card {
         return type;
     }
 
-    public Map<Resources, Integer> getCost() {
+    public List<Cost> getCost() {
         return cost;
     }
 
