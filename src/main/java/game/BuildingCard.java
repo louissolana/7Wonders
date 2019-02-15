@@ -15,3 +15,4 @@ public class BuildingCard extends Card {
         return prebuild;
     }
 }
+
