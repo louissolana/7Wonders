@@ -1,4 +1,7 @@
+import client.Client;
+import com.corundumstudio.socketio.Configuration;
 import game.*;
+import server.Server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,5 +35,16 @@ public class Main {
         Player p1 = new Player(b1, list, null, resourcesContainer, 3, 0 , 0, null, null);
 
         System.out.println(p1.toString());
+
+        //client serveur gogogo
+        Configuration conf = new Configuration();
+        conf.setHostname("127.0.0.1");
+        conf.setPort(8080);
+
+        Server server = new Server(conf);
+        server.startServer();
+
+        Client client = new Client(1, p1, "127.0.0.1", 8080);
+        client.connect();
     }
 }

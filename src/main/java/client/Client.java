@@ -3,18 +3,75 @@ package client;
 import game.Card;
 import game.Cost;
 import game.Player;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import org.json.JSONObject;
 
+import java.net.URISyntaxException;
 import java.util.Scanner;
 
 public class Client {
     private int id;
     private Player player;
+    private Socket socket;
+    private String urlServ;
+    private int portServ;
+
+    final Object stopObject = new Object();
 
 
-    public Client(int id, Player player) {
+    public Client(int id, Player player, String url, int port) {
         this.id = id;
         this.player = player;
+        this.urlServ = url;
+        this.portServ = port;
+
+        try {
+            socket = IO.socket(urlServ + port);
+
+            socket.on("connect", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    JSONObject toSend = action();
+                    socket.emit("card", toSend);
+                }
+            });
+
+            socket.on("disconnect", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    System.out.println("[CLIENT]Disconnect");
+                    socket.disconnect();
+                    socket.close();
+                    synchronized (stopObject) {
+                        stopObject.notify();
+                    }
+                }
+            });
+
+            socket.on("answer", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    System.out.println("[CLIENT]Answer: " + objects[0]);
+                    setAmountGold(3);
+                }
+            });
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connect() {
+        socket.connect();
+        synchronized (stopObject) {
+            try{
+                stopObject.wait();
+            } catch (InterruptedException ie) {
+                System.out.println("[CLIENT]Problem here");
+            }
+        }
+    }
+
+    private void setAmountGold(int val) {
+        player.changeAmountGold(val);
     }
 
     public JSONObject action() {

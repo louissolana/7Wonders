@@ -34,6 +34,14 @@ public class Player {
         return resources;
     }
 
+    public void changeAmountGold(int val) {
+        if(gold + val >= 0) {
+            gold += val;
+        } else {
+            gold = 0;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
