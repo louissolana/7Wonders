@@ -32,5 +32,6 @@ public class Main {
         Player p1 = new Player(b1, list, null, resourcesContainer, 3, 0 , 0, null, null);
 
         System.out.println(p1.toString());
+
     }
 }
