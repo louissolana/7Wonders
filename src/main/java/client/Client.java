@@ -65,4 +65,10 @@ public class Client {
         String line = entry.nextLine();
         return null;
     }
+
+    public void printHand(){
+        for(Card c: player.getHand()){
+            System.out.println(c.toString());
+        }
+    }
 }
