@@ -30,6 +30,10 @@ public class Player {
         return hand;
     }
 
+    public Map<Resources, Integer> getResources() {
+        return resources;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
