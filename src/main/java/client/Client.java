@@ -28,7 +28,7 @@ public class Client {
         this.portServ = port;
 
         try {
-            socket = IO.socket(urlServ + port);
+            socket = IO.socket(urlServ + ":" + port);
 
             socket.on("connect", new Emitter.Listener() {
                 public void call(Object... objects) {
