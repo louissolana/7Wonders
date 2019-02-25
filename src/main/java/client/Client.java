@@ -76,7 +76,7 @@ public class Client {
     public void connect() {
         socket.connect();
         synchronized (stopObject) {
-            try{
+            try {
                 stopObject.wait();
             } catch (InterruptedException ie) {
                 System.out.println("[CLIENT]Problem here");
@@ -88,6 +88,12 @@ public class Client {
         player.changeAmountGold(val);
     }
 
+    public static boolean isNullOrEmpty(String str) {
+        if (str != null && !str.equals(""))
+            return false;
+        return true;
+    }
+
     public JSONObject action() {
         JSONObject command = new JSONObject();
         //display hand
@@ -97,22 +103,28 @@ public class Client {
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
-        switch (input.charAt(0)) {
-            case 1:
-                command = discard();
-                break;
-            case 2:
-                command = build();
-                break;
-            case 3:
-                command = playCard();
-                break;
-            default:
-                break;
+        if (isNullOrEmpty(input)) {
+            action();
+        } else {
+            switch (input.charAt(0)) {
+                case 1:
+                    command = discard();
+                    break;
+                case 2:
+                    command = build();
+                    break;
+                case 3:
+                    command = playCard();
+                    break;
+                default:
+                    break;
+            }
+            //
+            return command;
         }
-        //
-        return command;
+        return null;
     }
+
 
     /**
      * Action to discard a card and gain 3 gold
