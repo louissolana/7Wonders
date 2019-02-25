@@ -45,19 +45,20 @@ public class Player {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Board: " + playerBoard.toString());
+        sb.append("PLAYER INFO :\n");
+        sb.append(playerBoard.toString());
         sb.append("Gold: " + gold + "\n");
         sb.append("Victory points: " + victory + "\n");
         sb.append("Battle points: " + battle + "\n");
         if(resources != null && !resources.isEmpty()) {
-            sb.append("Resources: ");
+            sb.append("\nRESOURCES: \n");
             for (Map.Entry<Resources, Integer> map: resources.entrySet()
             ) {
                 sb.append(map.getKey() + ": " + map.getValue() + "\n");
             }
         }
         if(hand != null && !hand.isEmpty()) {
-            sb.append("Hand: ");
+            sb.append("\nHAND: \n");
             for (Card c: hand
             ) {
                 sb.append(c.toString());

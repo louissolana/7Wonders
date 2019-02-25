@@ -19,6 +19,7 @@ public class Card {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("--------------------------- \n");
         sb.append("Card name: " + name + "\n");
         sb.append("Card type: " + type + "\n");
         sb.append("Card age: " + age + "\n");
@@ -27,6 +28,7 @@ public class Card {
                 sb.append(co.getRes() + ": " + co.getQuant() + "\n");
             }
         }
+        sb.append("--------------------------- \n");
         return sb.toString();
     }
 

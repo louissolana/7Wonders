@@ -16,13 +16,10 @@ public class Main {
         List<Cost> map2 = new ArrayList<Cost>();
         map2.add(new Cost(Resources.WOOD, 2));
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
-        Card c2 = new Card("MarchÃ©", Type.MARKET, null, 1);
+        Card c2 = new Card("Marché", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);
-        System.out.println(c1.toString());
 
         Board b1 = new Board("Pharos", Resources.STONE, null);
-
-        System.out.println(b1.toString());
 
         List<Card> list = new ArrayList<Card>();
         list.add(c1);
