@@ -16,7 +16,7 @@ public class Main {
         List<Cost> map2 = new ArrayList<Cost>();
         map2.add(new Cost(Resources.WOOD, 2));
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
-        Card c2 = new Card("Marché", Type.MARKET, null, 1);
+        Card c2 = new Card("Marchï¿½", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);
 
         Board b1 = new Board("Pharos", Resources.STONE, null);
@@ -34,12 +34,19 @@ public class Main {
         System.out.println(p1.toString());
 
         //client serveur gogogo
-        Configuration conf = new Configuration();
+        final Configuration conf = new Configuration();
         conf.setHostname("127.0.0.1");
         conf.setPort(8080);
 
-        Server server = new Server(conf);
-        server.startServer();
+        Runnable r = new Runnable() {
+            public void run()
+            {
+                Server server = new Server(conf);
+                server.startServer();
+            }
+        };
+
+        new Thread(r).start();
 
         Client client = new Client(1, p1, "http://127.0.0.1", 8080);
         client.connect();
