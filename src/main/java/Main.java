@@ -44,7 +44,7 @@ public class Main {
         Server server = new Server(conf);
         server.startServer();
 
-        Client client = new Client(1, p1, "127.0.0.1", 8080);
+        Client client = new Client(1, p1, "http://127.0.0.1", 8080);
         client.connect();
     }
 }

@@ -11,6 +11,20 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+import commun.Coup;
+import commun.Identification;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
 public class Client {
     private int id;
     private Player player;
