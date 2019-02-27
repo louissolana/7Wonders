@@ -8,6 +8,11 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Server {
     private SocketIOServer server;
     final Object waitObject = new Object();
@@ -32,9 +37,17 @@ public class Server {
     }
 
     private void treatment(SocketIOClient soc) {
-        JSONObject answer = new JSONObject();
-        answer.put("result", "DISCARD");
-        answer.put("gold", 3);
+        List<Map<String,String>> answer = new ArrayList<Map<String,String>>();
+        HashMap<String,String> FirstOne = new HashMap<String, String>();
+        HashMap<String,String> SecondOne = new HashMap<String, String>();
+
+        answer.add(FirstOne);
+        answer.add(SecondOne);
+
+        //JSONObject answer = new JSONObject();
+        FirstOne.put("result", "DISCARD");
+        SecondOne.put("gold", "3");
+        //String answer = "Salut";
         soc.sendEvent("answer", answer);
     }
 

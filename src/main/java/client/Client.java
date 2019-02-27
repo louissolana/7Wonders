@@ -1,5 +1,6 @@
 package client;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import game.Card;
 import game.Cost;
 import game.Player;
@@ -64,7 +65,8 @@ public class Client {
 
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    System.out.println("[CLIENT]Answer: " + objects[0]);
+                    JSONArray test = (JSONArray) objects[0];
+                    System.out.println("[CLIENT]Answer: " + test.toString());
                     setAmountGold(3);
                 }
             });

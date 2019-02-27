@@ -1,5 +1,6 @@
 import client.Client;
 import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketConfig;
 import game.*;
 import server.Server;
 
@@ -37,6 +38,8 @@ public class Main {
         final Configuration conf = new Configuration();
         conf.setHostname("127.0.0.1");
         conf.setPort(8080);
+        SocketConfig s = conf.getSocketConfig();
+        s.setReuseAddress(true);
 
         Runnable r = new Runnable() {
             public void run()
