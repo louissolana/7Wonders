@@ -1,56 +1,71 @@
 Lancement de l'application :
 
-	- Lancer le main, présent la branche Master.
+	- lancer le main, présent la branche Master.
 	
 Fonctionnalités :
 
     1ère itération (livré le 16/02/19):
 
-    - Créer un serveur,
-    - Création classe client,
-    - Lancement de partie,
-    - Création des cartes, d'une merveille et d'un jeu de 3 cartes pour le client,
+    - créer un serveur,
+    - création classe client,
+    - lancement de partie,
+    - création des cartes, d'une merveille et d'un jeu de 3 cartes pour le client,
     
     2ème itération (livré le 27/02/19) :
     
-    - Relation client - serveur
+    - relation client - serveur
         * défausser d'une carte
         * recevoir 3 pièces en retour
         * jouer une carte
-    - Documentation pour le lancement du jeu
-    - Découpage et organisation des itérations futures
+    - documentation pour le lancement du jeu
+    - découpage et organisation des itérations futures
     
     3ème itération (livraison le 06/03/19) : 
     
+    - IA basique
+    -   Choisir le nombre de joueurs
+        * envoyer nombre de joueur au serveur
+        * retourner la liste des cartes jouables
+    - tests unitaires
+        
+    4ème itération (livraison le 20/03/19) :
+    
+    - donner mes cartes (envoyer au serveur)
     - consulter ressources des voisins
         * affichage du bois, argile, minerais, verre, pierres, papyrus et tissu
+    - commerce avec les joueurs adjacents
+    - avancement de l'IA
+    - tests unitaires
+        
+    5ème itération (livraison le 27/03/19) :
+    
+    - mécanisme de construction
+    - avancement de l'IA
+    - tests unitaires
+    
+    6ème itération (livraison le 10/04/19) :
+    
     - implémentation du mécanisme de combat
         * calculer les points de combats
         * comparer les points de combats
         * enregistrer les scores
-        
-    4ème itération (livraison le 20/03/19) :
-    
-    -   Donner mes cartes (envoyer au serveur)
-    -   Choisir le nombre de joueurs
-        * envoyer nombre de joueur au serveur
-        * retourner la liste des cartes jouables
-    
-    5ème itération (livraison le 27/03/19) :
-    
-    -   Commerce avec les joueurs adjacents
     -   Affichage des scores à la fin du premier tour
-    
-    6ème itération (livraison le 10/04/19) :
-    
-    -   Changer d'âge
-        * distibution des cartes en fonction de l'âge
-        * changement de sens
+    - avancement de l'IA
+    - tests unitaires
     
     7ème itération (livraison le 26/04/19) :
     
-    -   Création de l'IA pour que le jeu tourne tout seul
+    - changer d'âge
+        * distibution des cartes en fonction de l'âge
+        * changement de sens
+    - avancement de l'IA
+    - tests unitaires
     
 Règles du jeu : 
    
-    http://www.7wondersduel.com/7wonders-duel-rules.php?lang=fr  
+    http://www.7wondersduel.com/7wonders-duel-rules.php?lang=fr
+    
+    
+    
+   
+     
