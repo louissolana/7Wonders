@@ -23,13 +23,14 @@ Fonctionnalités :
     3ème itération (livraison le 06/03/19) : 
     
     - IA basique
-    -   Choisir le nombre de joueurs
+    -  Choisir le nombre de joueurs
         * envoyer nombre de joueur au serveur
         * retourner la liste des cartes jouables
     - tests unitaires
         
     4ème itération (livraison le 20/03/19) :
     
+    - choisir une carte (aléatoirement pour le moment)
     - donner mes cartes (envoyer au serveur)
     - consulter ressources des voisins
         * affichage du bois, argile, minerais, verre, pierres, papyrus et tissu
@@ -39,6 +40,9 @@ Fonctionnalités :
         
     5ème itération (livraison le 27/03/19) :
     
+    - jouer une carte
+        * sélectionner une carte (aléatoirement pour le moment)
+        * activer l'effet de la carte (mettre à jour les ressources depuis le serveur)
     - mécanisme de construction
     - avancement de l'IA
     - tests unitaires
