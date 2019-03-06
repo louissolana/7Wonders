@@ -29,16 +29,20 @@ public class Player {
     public List<Card> getHand() {
         return hand;
     }
+    
+    public int getGold(){
+    	return gold;
+    }
 
     public Map<Resources, Integer> getResources() {
         return resources;
     }
 
     public void changeAmountGold(int val) {
-        if(gold + val >= 0) {
-            gold += val;
+        if(this.gold + val >= 0) {
+            this.gold += val;
         } else {
-            gold = 0;
+            this.gold = 0;
         }
     }
 

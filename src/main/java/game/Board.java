@@ -20,8 +20,7 @@ public class Board {
         sb.append("Own resource: " + this.boardResource + "\n");
         if(cardsPlayed != null) {
             sb.append("Cards played: ");
-            for (Card c: this.cardsPlayed
-            ) {
+            for (Card c: this.cardsPlayed) {
                 sb.append(c.toString() + "\n");
             }
         }
