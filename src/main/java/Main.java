@@ -32,7 +32,7 @@ public class Main {
         resourcesContainer.put(Resources.SCIENCE, 1);
         Player p1 = new Player(b1, list, null, resourcesContainer, 3, 0 , 0, null, null);
 
-        System.out.println(p1.toString());
+        //System.out.println(p1.toString());
 
         //client serveur gogogo
         final Configuration conf = new Configuration();

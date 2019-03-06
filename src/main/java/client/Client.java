@@ -109,13 +109,13 @@ public class Client {
             action();
         } else {
             switch (input.charAt(0)) {
-                case 1:
+                case '1':
                     command = discard();
                     break;
-                case 2:
+                case '2':
                     command = build();
                     break;
-                case 3:
+                case '3':
                     command = playCard();
                     break;
                 default:
@@ -161,11 +161,12 @@ public class Client {
      * @return Json String containing the command PLAY and the Card played
      */
     public JSONObject playCard() {
+        System.out.println("[DEBUG] enter playcard");
         Card played = chooseCard(3);
         JSONObject res = new JSONObject();
         res.put("command", "PLAY");
         res.put("card", played.getName());
-
+        System.out.println(res);
         return res;
     }
 
@@ -180,19 +181,23 @@ public class Client {
         System.out.println("Enter number of picked card");
         Scanner entry = new Scanner(System.in);
         String line = entry.nextLine();
-        if (line.charAt(0) >= 1 && line.charAt(0) <= player.getHand().size()) {
+        System.out.println(line);
+        if (Integer.parseInt(line) >= 0 && Integer.parseInt(line) <= player.getHand().size()) {
+            System.out.println("check");
+            int pos = Integer.parseInt(line);
             if (act == 1) {
-                return player.getHand().get(line.charAt(0));
+                return player.getHand().get(pos);
             } else if(act == 2) {
                 //no check atm to build
-                return player.getHand().get(line.charAt(0));
-            } else {
+                return player.getHand().get(pos);
+            } else if(act == 3){
                 //check if possible
-                if (player.getHand().get(line.charAt(0)).getCost() == null) {
-                    return player.getHand().get(line.charAt(0));
+                if (player.getHand().get(pos).getCost() == null) {
+                    System.out.println(player.getHand().get(pos).toString());
+                    return player.getHand().get(pos);
                 } else {
                     boolean valid = false;
-                    Card tmp = player.getHand().get(line.charAt(0));
+                    Card tmp = player.getHand().get(pos);
                     for (Cost co: tmp.getCost()
                          ) {
                         valid = player.getResources().containsKey(co.getRes()) && player.getResources().containsValue(co.getRes());
