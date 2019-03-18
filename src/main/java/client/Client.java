@@ -12,8 +12,6 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
-import commun.Coup;
-import commun.Identification;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -36,6 +34,8 @@ public class Client {
     final Object stopObject = new Object();
 
 
+
+
     public Client(int id, Player player, String url, int port) {
         this.id = id;
         this.player = player;
@@ -56,7 +56,6 @@ public class Client {
                 public void call(Object... objects) {
                     System.out.println("[CLIENT]Disconnect");
                     socket.disconnect();
-                    socket.close();
                     synchronized (stopObject) {
                         stopObject.notify();
                     }
@@ -111,13 +110,19 @@ public class Client {
             switch (input.charAt(0)) {
                 case '1':
                     command = discard();
+                    socket.connect();
+
                     break;
                 case '2':
                     command = build();
+                    socket.connect();
                     break;
+
                 case '3':
                     command = playCard();
+                    socket.connect();
                     break;
+
                 default:
                     break;
             }
@@ -139,7 +144,7 @@ public class Client {
         JSONObject res = new JSONObject();
         res.put("command", "DISCARD");
         res.put("card", sacrificed.getName());
-
+        System.out.println(sacrificed.getName() + " a été défaussée");
         return res;
     }
 
@@ -183,7 +188,7 @@ public class Client {
         String line = entry.nextLine();
         System.out.println(line);
         if (Integer.parseInt(line) >= 0 && Integer.parseInt(line) <= player.getHand().size()) {
-            System.out.println("check");
+
             int pos = Integer.parseInt(line);
             if (act == 1) {
                 return player.getHand().get(pos);
@@ -212,11 +217,13 @@ public class Client {
     }
 
     public void displayHand() {
+        System.out.println("Numéro du Joueur : " + player.getId());
         for (Card c: player.getHand()
         ) {
             System.out.println(c.toString());
         }
     }
+
 
     @Override
     public String toString() {

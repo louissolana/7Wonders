@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         List<Cost> map1 = new ArrayList<Cost>();
         map1.add(new Cost(Resources.GOLD, 1));
-        int nbJoueur = 3;
+        int nbJoueur = 4;
         List<Cost> map2 = new ArrayList<Cost>();
         map2.add(new Cost(Resources.WOOD, 2));
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
@@ -40,7 +40,7 @@ public class Main {
         //Check Nb joueur
         switch(nbJoueur) {
         case 1: try {
-				Player p1 = new Player(b1, list, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(1, b1, list, null, resourcesContainer, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -48,8 +48,8 @@ public class Main {
 			} 
         break;
         case 2: try {
-				Player p1 = new Player(b1, list, null, resourcesContainer, 2, 0 , 1, null, null);
-				Player p2 = new Player(b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(1, b1, list, null, resourcesContainer, 2, 0 , 1, null, null);
+				Player p2 = new Player(2, b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 			} catch (Exception e) {
@@ -58,9 +58,9 @@ public class Main {
 			} 
         break;
         case 3: try {
-				Player p1 = new Player(b1, list, null, resourcesContainer, 1, 2 , 1, null, null); 
-				Player p2 = new Player(b2, list, null, resourcesContainer, 3, 0 , 0, null, null); 
-				Player p3 = new Player(b3, list, null, resourcesContainer, 3, 2 , 1, null, null);
+				Player p1 = new Player(1,b1, list, null, resourcesContainer, 1, 2 , 1, null, null);
+				Player p2 = new Player(2,b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(3,b3, list, null, resourcesContainer, 3, 2 , 1, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -71,10 +71,10 @@ public class Main {
         break;
         case 4: 
 			try {
-				Player p1 = new Player(b1, list, null, resourcesContainer, 1, 2 , 1, null, null); 
-				Player p2 = new Player(b2, list, null, resourcesContainer, 3, 0 , 0, null, null); 
-				Player p3 = new Player(b3, list, null, resourcesContainer, 3, 2 , 1, null, null); 
-				Player p4 = new Player(b4, list, null, resourcesContainer, 2, 1 , 3, null, null);
+				Player p1 = new Player(1,b1, list, null, resourcesContainer, 1, 2 , 1, null, null);
+				Player p2 = new Player(2,b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(3,b3, list, null, resourcesContainer, 3, 2 , 1, null, null);
+				Player p4 = new Player(4,b4, list, null, resourcesContainer, 2, 1 , 3, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -94,6 +94,9 @@ public class Main {
         final Configuration conf = new Configuration();
         conf.setHostname("127.0.0.1");
         conf.setPort(8080);
+        conf.setUpgradeTimeout(10000000);
+        conf.setPingTimeout(10000000);
+        conf.setPingInterval(10000000);
         SocketConfig s = conf.getSocketConfig();
         s.setReuseAddress(true);
 

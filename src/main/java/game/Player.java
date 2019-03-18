@@ -13,8 +13,14 @@ public class Player {
     private int battle;
     private Player playerLeft;
     private Player playerRight;
+    private int id;
 
-    public Player(Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, int gold, int victory, int battle, Player playerLeft, Player playerRight) {
+    public int getId() {
+        return id;
+    }
+
+    public Player(int id, Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, int gold, int victory, int battle, Player playerLeft, Player playerRight) {
+        this.id = id;
         this.playerBoard = playerBoard;
         this.hand = hand;
         this.oldHand = oldHand;
