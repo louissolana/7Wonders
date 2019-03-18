@@ -12,8 +12,6 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
-import commun.Coup;
-import commun.Identification;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
