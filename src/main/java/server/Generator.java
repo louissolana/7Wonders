@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ public class Generator {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONArray infos = (JSONArray)parser.parse(new FileReader("../../resources/cards.json"));
+            String inputFile = new File("src/main/resources/cards.json").getAbsolutePath();
+            JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
 
             for(Object o: infos) {
                 JSONObject jo = (JSONObject) o;
-                if((Integer)jo.get("player") <= players) {
+                System.out.println(jo.get("player"));
+                if(Integer.parseInt((String)jo.get("player")) <= players) {
                     String cardName = (String)jo.get("name");
                     String type = (String)jo.get("type");
                     Type cardType = null;
@@ -38,13 +41,14 @@ public class Generator {
                     if(type.equals("RESOURCE")) cardType = Type.RESOURCE;
                     if(type.equals("CRAFT")) cardType = Type.CRAFT;
                     if(type.equals("MARKET")) cardType = Type.MARKET;
-                    Integer cardAge = (Integer)jo.get("age");
+                    Integer cardAge = Integer.parseInt((String)jo.get("age"));
 
-                    if((JSONArray)jo.get("cost") == null) {
+                    if((JSONArray)jo.get("cost") == null || ((JSONArray) jo.get("cost")).isEmpty()) {
                         deck.add(new Card(cardName, cardType, null, cardAge));
                     } else {
                         List<Cost> costs = new ArrayList<Cost>();
-                        String resource = (String)jo.get("res");
+                        JSONObject res = (JSONObject) ((JSONArray) jo.get("cost")).get(0);
+                        String resource = (String)res.get("res");
                         String[] tab = resource.split("_");
                         Resources costType = Resources.GOLD;
                         if (tab[0].equals("clay")) costType = Resources.CLAY;
@@ -74,6 +78,36 @@ public class Generator {
     }
 
     public List<Board> generateBoards() {
-        return null;
+        List<Board> boards = new ArrayList<Board>();
+        JSONParser parser = new JSONParser();
+
+        try {
+            String inputFile = new File("src/main/resources/boards.json").getAbsolutePath();
+            JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
+
+            for(Object o: infos) {
+                JSONObject jo = (JSONObject)o;
+                String boardName = (String)jo.get("name");
+                String res = (String)jo.get("own");
+                Resources ownRes = Resources.GOLD;
+                if (res.equals("clay")) ownRes = Resources.CLAY;
+                if (res.equals("stone")) ownRes = Resources.STONE;
+                if (res.equals("ore")) ownRes = Resources.ORE;
+                if (res.equals("wood")) ownRes = Resources.WOOD;
+                if (res.equals("cloth")) ownRes = Resources.CLOTH;
+                if (res.equals("science")) ownRes = Resources.SCIENCE;
+                if (res.equals("military")) ownRes = Resources.MILITARY;
+                if (res.equals("compass")) ownRes = Resources.COMPASS;
+                if (res.equals("gear")) ownRes = Resources.GEAR;
+                if (res.equals("paper")) ownRes = Resources.PAPER;
+                if (res.equals("tablet")) ownRes = Resources.TABLET;
+                boards.add(new Board(boardName, ownRes, null));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return boards;
     }
 }
