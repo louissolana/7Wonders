@@ -22,7 +22,7 @@ Fonctionnalités :
     
     3ème itération (livraison le 06/03/19) : 
     
-    - IA basique
+    - Intelligence artificielle basique
     -  Choisir le nombre de joueurs
         * envoyer nombre de joueur au serveur
         * retourner la liste des cartes jouables
@@ -35,7 +35,7 @@ Fonctionnalités :
     - consulter ressources des voisins
         * affichage du bois, argile, minerais, verre, pierres, papyrus et tissu
     - commerce avec les joueurs adjacents
-    - avancement de l'IA
+    - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
         
     5ème itération (livraison le 27/03/19) :
@@ -44,7 +44,7 @@ Fonctionnalités :
         * sélectionner une carte (aléatoirement pour le moment)
         * activer l'effet de la carte (mettre à jour les ressources depuis le serveur)
     - mécanisme de construction
-    - avancement de l'IA
+    - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
     
     6ème itération (livraison le 10/04/19) :
@@ -54,7 +54,7 @@ Fonctionnalités :
         * comparer les points de combats
         * enregistrer les scores
     -   Affichage des scores à la fin du premier tour
-    - avancement de l'IA
+    - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
     
     7ème itération (livraison le 26/04/19) :
@@ -62,7 +62,7 @@ Fonctionnalités :
     - changer d'âge
         * distibution des cartes en fonction de l'âge
         * changement de sens
-    - avancement de l'IA
+    - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
     
 Règles du jeu : 
