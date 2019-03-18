@@ -6,6 +6,8 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
+import game.Board;
+import game.Card;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,18 +39,29 @@ public class Server {
     }
 
     private void treatment(SocketIOClient soc) {
-        List<Map<String,String>> answer = new ArrayList<Map<String,String>>();
+
+       /*
         HashMap<String,String> FirstOne = new HashMap<String, String>();
         HashMap<String,String> SecondOne = new HashMap<String, String>();
 
         answer.add(FirstOne);
         answer.add(SecondOne);
 
-        //JSONObject answer = new JSONObject();
         FirstOne.put("result", "DISCARD");
         SecondOne.put("gold", "3");
-        //String answer = "Salut";
-        soc.sendEvent("answer", answer);
+        */
+
+        Generator cards = new Generator(4);
+
+        List<Card> listeCards = new ArrayList<Card>();
+        listeCards = cards.generateCards();
+
+        List<Board> listeBoards = new ArrayList<Board>();
+        listeBoards = cards.generateBoards();
+
+
+
+        soc.sendEvent("answer", cards);
     }
 
     public void startServer() {

@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 public class Generator {
     private int players;
@@ -23,11 +24,13 @@ public class Generator {
         JSONParser parser = new JSONParser();
 
         try {
-            JSONArray infos = (JSONArray)parser.parse(new FileReader("../../resources/cards.json"));
+
+            String inputFile = new File("src/main/resources/cards.json").getAbsolutePath();
+            JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
 
             for(Object o: infos) {
                 JSONObject jo = (JSONObject) o;
-                if((Integer)jo.get("player") <= players) {
+                if(Integer.parseInt(jo.get("player").toString()) <= (Integer)players) {
                     String cardName = (String)jo.get("name");
                     String type = (String)jo.get("type");
                     Type cardType = null;

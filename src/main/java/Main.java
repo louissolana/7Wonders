@@ -16,6 +16,7 @@ public class Main {
         int nbJoueur = 4;
         List<Cost> map2 = new ArrayList<Cost>();
         map2.add(new Cost(Resources.WOOD, 2));
+
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
         Card c2 = new Card("March�", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);
