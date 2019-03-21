@@ -18,7 +18,7 @@ public class Card {
         this.age = age;
     }
     
-    public JSONObject CardToJson(Card cards)
+    public JSONObject CardToJson()
     {
     	JSONObject obj = new JSONObject();
     	obj.put("cardName", name);

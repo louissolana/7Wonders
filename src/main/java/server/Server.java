@@ -8,6 +8,7 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import game.Board;
 import game.Card;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,12 +61,21 @@ public class Server {
         List<Card> listeCards = new ArrayList<Card>();
         listeCards = cards.generateCards();
 
+
         List<Board> listeBoards = new ArrayList<Board>();
         listeBoards = cards.generateBoards();
 
 
 
-        soc.sendEvent("answer", cards);
+        JSONArray cardJson = new JSONArray();
+
+        for(Card card: listeCards)
+        {
+            cardJson.put(card.CardToJson());
+        }
+
+
+        soc.sendEvent("answer", cardJson);
     }
 
     public void startServer() {
