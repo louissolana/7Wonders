@@ -64,8 +64,8 @@ public class Client {
 
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    JSONArray test = (JSONArray) objects[0];
-                    System.out.println("[CLIENT]Answer: " + test.toString());
+                    //JSONArray test = (JSONArray) objects[0];
+                    //System.out.println("[CLIENT]Answer: " + objects[0].toString());
                     setAmountGold(3);
                 }
             });

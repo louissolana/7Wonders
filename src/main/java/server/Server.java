@@ -44,20 +44,6 @@ public class Server {
     }
 
     private void treatment(SocketIOClient soc) {
-
-       /*
-        HashMap<String,String> FirstOne = new HashMap<String, String>();
-        HashMap<String,String> SecondOne = new HashMap<String, String>();
-
-        answer.add(FirstOne);
-        answer.add(SecondOne);
-
-        FirstOne.put("result", "DISCARD");
-        SecondOne.put("gold", "3");
-        */
-
-
-
         List<Card> listeCards = new ArrayList<Card>();
         listeCards = cards.generateCards();
 
@@ -65,9 +51,20 @@ public class Server {
         List<Board> listeBoards = new ArrayList<Board>();
         listeBoards = cards.generateBoards();
 
+        HashMap<String,String> FirstOne = new HashMap<String, String>();
+        HashMap<String,String> SecondOne = new HashMap<String, String>();
 
+        //answer.add(FirstOne);
+        //answer.add(SecondOne);
 
-        JSONArray cardJson = new JSONArray();
+        JSONObject answer = new JSONObject();
+        answer.put("result","DISCARD");
+        answer.put("effect", "gold_3");
+        //FirstOne.put("result", "DISCARD");
+        //SecondOne.put("gold", "3");
+        soc.sendEvent("answer", answer);
+
+        /*JSONArray cardJson = new JSONArray();
 
         for(Card card: listeCards)
         {
@@ -75,7 +72,7 @@ public class Server {
         }
 
 
-        soc.sendEvent("answer", cardJson);
+        soc.sendEvent("answer", cardJson);*/
     }
 
     public void startServer() {
