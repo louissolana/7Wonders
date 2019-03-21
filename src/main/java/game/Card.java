@@ -3,6 +3,8 @@ package game;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+
 public class Card {
     private String name;
     private Type type;
@@ -14,6 +16,17 @@ public class Card {
         this.type = type;
         this.cost = resources;
         this.age = age;
+    }
+    
+    public JSONObject CardToJson(Card cards)
+    {
+    	JSONObject obj = new JSONObject();
+    	obj.put(cards, name);
+    	obj.put(cards, type);
+    	obj.put(cards, cost);
+    	obj.put(cards, age);
+    	
+    	return obj;
     }
 
     @Override
