@@ -23,7 +23,10 @@ public class Card {
     	JSONObject obj = new JSONObject();
     	obj.put("cardName", name);
     	obj.put("cardType", type);
-    	obj.put("cardCost", cost);
+    	if(cost.size() >= 0)
+    	{
+    		obj.put("cardCost", cost.get(0));
+    	}
     	obj.put("cardAge", age);
     	
     	return obj;
