@@ -18,7 +18,11 @@ import java.util.Map;
 public class Server {
     private SocketIOServer server;
     final Object waitObject = new Object();
+    private Generator cards;
+
     public Server(Configuration config){
+
+        cards = new Generator(4);
         server = new SocketIOServer(config);
 
         server.addConnectListener(new ConnectListener() {
@@ -51,7 +55,7 @@ public class Server {
         SecondOne.put("gold", "3");
         */
 
-        Generator cards = new Generator(4);
+
 
         List<Card> listeCards = new ArrayList<Card>();
         listeCards = cards.generateCards();

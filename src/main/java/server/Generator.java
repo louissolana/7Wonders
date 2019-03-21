@@ -30,7 +30,6 @@ public class Generator {
 
             for(Object o: infos) {
                 JSONObject jo = (JSONObject) o;
-                System.out.println(jo.get("player"));
                 if(Integer.parseInt((String)jo.get("player")) <= players) {
                     String cardName = (String)jo.get("name");
                     String type = (String)jo.get("type");
