@@ -96,12 +96,12 @@ public class Client {
     }
 
     public JSONObject action() {
-        JSONObject command = new JSONObject();
+        //JSONObject command = new JSONObject();
         //display hand
         displayHand();
         //get input action
         System.out.println("Choose action: 1 Discard, 2 Build, 3 Play");
-        Scanner scan = new Scanner(System.in);
+        /*Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
 
         if (isNullOrEmpty(input)) {
@@ -128,8 +128,8 @@ public class Client {
             }
             //
             return command;
-        }
-        return null;
+        }*/
+        return discard();
     }
 
 
@@ -140,7 +140,8 @@ public class Client {
      *     receive ["command":"DISCARDED","gold":3]
      */
     public JSONObject discard() {
-        Card sacrificed = chooseCard(1);
+        //Card sacrificed = chooseCard(1);
+        Card sacrificed = player.getHand().get(0);
         JSONObject res = new JSONObject();
         res.put("command", "DISCARD");
         res.put("card", sacrificed.getName());
