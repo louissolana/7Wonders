@@ -21,10 +21,10 @@ public class Card {
     public JSONObject CardToJson(Card cards)
     {
     	JSONObject obj = new JSONObject();
-    	obj.put(cards, name);
-    	obj.put(cards, type);
-    	obj.put(cards, cost);
-    	obj.put(cards, age);
+    	obj.put("cardName", name);
+    	obj.put("cardType", type);
+    	obj.put("cardCost", cost);
+    	obj.put("cardAge", age);
     	
     	return obj;
     }
