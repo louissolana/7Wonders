@@ -18,13 +18,16 @@ public class Card {
         this.age = age;
     }
     
-    public JSONObject CardToJson(Card cards)
+    public JSONObject CardToJson()
     {
     	JSONObject obj = new JSONObject();
-    	obj.put(cards, name);
-    	obj.put(cards, type);
-    	obj.put(cards, cost);
-    	obj.put(cards, age);
+    	obj.put("cardName", name);
+    	obj.put("cardType", type);
+    	if(cost.size() >= 0)
+    	{
+    		obj.put("cardCost", cost.get(0));
+    	}
+    	obj.put("cardAge", age);
     	
     	return obj;
     }
