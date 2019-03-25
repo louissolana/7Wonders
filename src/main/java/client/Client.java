@@ -1,6 +1,5 @@
 package client;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import game.Card;
 import game.Cost;
 import game.Player;
@@ -11,18 +10,6 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.Scanner;
-
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class Client {
     private int id;
@@ -45,10 +32,43 @@ public class Client {
         try {
             socket = IO.socket(urlServ + ":" + port);
 
+            // action pour se connecter
             socket.on("connect", new Emitter.Listener() {
                 public void call(Object... objects) {
                     JSONObject toSend = action();
+                    toSend.put("id", getId());
+                    socket.emit("connectAndWait", toSend);
+                }
+            });
+
+            // on reçoit la main de depart + le plateau de jeu, a traiter donc
+            // on recupère un JSONObject de la forme:
+            /**
+                {"boardName":"XXX", "own":"stone", "hand":[...]}
+                focus sur "hand":[...] :
+                    {"cardName":"YYY", "age":"1", "type":"science", "cost": []} <-- cas cout nul
+                    "cost": [{"res":"gold_1"},{"res":"wood_2"}] par exemple
+             **/
+            socket.on("initial", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    // utlisation de setters + mouliner les donnees recues -> s'inspirer de Generator
+                }
+            });
+
+            // action du tour de jeu, deja fait
+            socket.on("play", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    JSONObject toSend = action();
                     socket.emit("card", toSend);
+                }
+            });
+
+            // resultat de l'action effectuee, a traiter
+            socket.on("answer", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    //JSONArray test = (JSONArray) objects[0];
+                    //System.out.println("[CLIENT]Answer: " + objects[0].toString());
+                    setAmountGold(3);
                 }
             });
 
@@ -62,13 +82,6 @@ public class Client {
                 }
             });
 
-            socket.on("answer", new Emitter.Listener() {
-                public void call(Object... objects) {
-                    //JSONArray test = (JSONArray) objects[0];
-                    //System.out.println("[CLIENT]Answer: " + objects[0].toString());
-                    setAmountGold(3);
-                }
-            });
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -233,5 +246,9 @@ public class Client {
         sb.append(player.toString());
 
         return sb.toString();
+    }
+
+    public int getId() {
+        return id;
     }
 }
