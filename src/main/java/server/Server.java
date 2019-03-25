@@ -8,13 +8,10 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import game.Board;
 import game.Card;
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Server {
     private SocketIOServer server;
@@ -25,6 +22,7 @@ public class Server {
 
         cards = new Generator(4);
         server = new SocketIOServer(config);
+        List<JSONArray> hands = generateHands(4);
 
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient socketIOClient) {
@@ -41,6 +39,21 @@ public class Server {
                 }
             }
         });
+    }
+    
+    private List<JSONArray> generateHands(int players) {
+        List<Card> cardList = cards.generateCards(); // generation des cartes
+        Collections.shuffle(cardList); // on melange
+        List<JSONArray> res = new ArrayList<JSONArray>();
+
+        for(int i = 0; i < players; ++i) {
+            JSONArray tmp = new JSONArray();
+            for(int j = 0; j < 7; ++j) {
+                tmp.add(cardList.get(j + i*7).CardToJson());
+            }
+            res.add(tmp);
+        }
+        return res;
     }
 
     private void treatment(SocketIOClient soc) {
