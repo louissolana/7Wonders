@@ -43,7 +43,7 @@ Fonctionnalités :
     - jouer une carte
         * sélectionner une carte (aléatoirement pour le moment)
         * activer l'effet de la carte (mettre à jour les ressources depuis le serveur)
-    - mécanisme de construction
+    - générer les mains
     - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
     
@@ -53,7 +53,8 @@ Fonctionnalités :
         * calculer les points de combats
         * comparer les points de combats
         * enregistrer les scores
-    -   Affichage des scores à la fin du premier tour
+    - affichage des scores à la fin du premier tour
+    - mécanisme de construction
     - avancement de l'Intelligence artificielle (fonctionnement automatique)
     - tests unitaires
     
