@@ -35,9 +35,11 @@ public class Client {
             // action pour se connecter
             socket.on("connect", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    JSONObject toSend = action();
+                    /*JSONObject toSend = action();
                     toSend.put("id", getId());
-                    socket.emit("connectAndWait", toSend);
+                    socket.emit("connectAndWait", toSend);*/
+                    JSONObject toSend = action();
+                    socket.emit("card", toSend);
                 }
             });
 

@@ -22,7 +22,7 @@ public class Server {
 
         cards = new Generator(4);
         server = new SocketIOServer(config);
-        List<JSONArray> hands = generateHands(4);
+        //List<JSONArray> hands = generateHands(4);
 
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient socketIOClient) {
@@ -49,7 +49,7 @@ public class Server {
         for(int i = 0; i < players; ++i) {
             JSONArray tmp = new JSONArray();
             for(int j = 0; j < 7; ++j) {
-                tmp.add(cardList.get(j + i*7).CardToJson());
+                tmp.add((org.json.simple.JSONObject)cardList.get(j + i*7).CardToJson());
             }
             res.add(tmp);
         }
