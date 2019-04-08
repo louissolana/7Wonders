@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Client {
     private int id;
@@ -156,7 +157,9 @@ public class Client {
      */
     public JSONObject discard() {
         //Card sacrificed = chooseCard(1);
-        Card sacrificed = player.getHand().get(0);
+        Random rand = new Random();
+        int nbAlea = rand.nextInt(player.getHand().size());
+        Card sacrificed = player.getHand().get(nbAlea);
         JSONObject res = new JSONObject();
         res.put("command", "DISCARD");
         res.put("card", sacrificed.getName());
