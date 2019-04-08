@@ -98,6 +98,7 @@ public class Client {
              */
             socket.on("next_turn", new Emitter.Listener() {
                 public void call(Object... objects) {
+
                     //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
                 }
             });
@@ -192,7 +193,15 @@ public class Client {
         res.put("card", sacrificed.getName());
         System.out.println(sacrificed.getName() + " a été défaussée");
         player.getHand().remove(sacrificed);
+
+        for(Card c: player.getHand())
+        {
+            player.getOldHand().add(c);
+        }
+
+        //System.out.println(player.getOldHand().size());
         //System.out.println(player.getHand().size());
+
         return res;
     }
 
@@ -205,6 +214,11 @@ public class Client {
         JSONObject res = new JSONObject();
         res.put("command", "BUILD");
         res.put("card", sacrToBuild.getName());
+
+        for(Card c: player.getHand())
+        {
+            player.getOldHand().add(c);
+        }
 
         return res;
     }
@@ -220,6 +234,12 @@ public class Client {
         res.put("command", "PLAY");
         res.put("card", played.getName());
         System.out.println(res);
+
+        for(Card c: player.getHand())
+        {
+            player.getOldHand().add(c);
+        }
+
         return res;
     }
 

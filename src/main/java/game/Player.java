@@ -36,6 +36,8 @@ public class Player {
         return hand;
     }
 
+    public List<Card> getOldHand() { return oldHand;}
+
     public Map<Resources, Integer> getResources() {
         return resources;
     }
