@@ -1,9 +1,9 @@
 [
   {"name": "Colosse de Rhodes", "own": "ore"},
-  {"name": "Phare d'Alexandrie", "own": "science"},
-  {"name": "Temple d'Artemis", "own": "tablet"},
+  {"name": "Phare d Alexandrie", "own": "science"},
+  {"name": "Temple d Artemis", "own": "tablet"},
   {"name": "Jardins suspendus de Babylone", "own": "clay"},
   {"name": "Statue de Zeus", "own": "wood"},
-  {"name": "Mausolee d'Halicarnasse", "own": "cloth"},
+  {"name": "Mausolee d Halicarnasse", "own": "cloth"},
   {"name": "Grande pyramide de Gizeh", "own": "stone"}
 ]

@@ -36,6 +36,8 @@ public class Player {
         return hand;
     }
 
+    public List<Card> getOldHand() { return oldHand;}
+
     public Map<Resources, Integer> getResources() {
         return resources;
     }
@@ -46,6 +48,12 @@ public class Player {
         } else {
             gold = 0;
         }
+    }
+    
+    public void addRessources(){
+    // Vérifier si ressources déjà existante
+    // Si existe déjà, ajouter
+    // Sinon créer ressources
     }
 
     @Override
