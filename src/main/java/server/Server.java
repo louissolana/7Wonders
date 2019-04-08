@@ -17,6 +17,7 @@ public class Server {
     private SocketIOServer server;
     final Object waitObject = new Object();
     private Generator cards;
+    //TODO creer Map<id, socketclient> pour stocker et mettre a jour les infos clients
 
     public Server(Configuration config){
 
@@ -24,9 +25,24 @@ public class Server {
         server = new SocketIOServer(config);
         //List<JSONArray> hands = generateHands(4);
 
+        //TODO: ajouter un compteur de clients pour savoir quand envoyer la sauce chef
+        /**
+         * Attendre les clients, puis distribuer a tous (via une boucle)
+         * {"boardName":"XXX", "own":"stone", "hand":[...]}
+         * focus sur "hand":[...] :
+         *     {"cardName":"YYY", "age":"1", "type":"science", "cost": []} <-- cas cout nul
+         *          cost": [{"res":"gold_1"},{"res":"wood_2"}] par exemple
+         */
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient socketIOClient) {
                 System.out.println("[SERVER]Receive call from " + socketIOClient.getRemoteAddress());
+                //TODO mettre a jour la Map + incrementer compteur, une fois le bon nombre de clients, envoyer
+                // mains & plateaux a chacun des joueurs
+                /*
+                    soit foreach sur le map, soit for classique
+                    sur chaque socclient: socClient.sendEvent("initial", board&Hand);
+                 */
+                //TODO on remet a 0 le compteur pour temporiser
             }
         });
 
@@ -37,6 +53,13 @@ public class Server {
                 synchronized (waitObject) {
                     waitObject.notify();
                 }
+            }
+        });
+
+        // on reçoit la main de chaque joueur
+        server.addEventListener("hand", org.json.simple.JSONObject.class, new DataListener<org.json.simple.JSONObject>() {
+            public void onData(SocketIOClient socketIOClient, org.json.simple.JSONObject jsonObject, AckRequest ackRequest) throws Exception {
+
             }
         });
     }
