@@ -84,6 +84,30 @@ public class Client {
             //TODO: traiter la réponse -> ajouter la ressource au set de ressources du joueur OU augmenter de 1 la ressource si elle est déjà présente
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
+                    JSONParser parser = new JSONParser();
+
+                    try {
+                        String inputFile = new File("src/main/resources/cards.json").getAbsolutePath();
+                        JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
+
+                        for(Object o: infos) {
+                            JSONObject jo = (JSONObject)o;
+                            String res = (String)jo.get("own");
+                            Resources ownRes = Resources.GOLD;
+                            if (res.equals("clay")) ownRes = Resources.CLAY;
+                            if (res.equals("stone")) ownRes = Resources.STONE;
+                            if (res.equals("ore")) ownRes = Resources.ORE;
+                            if (res.equals("wood")) ownRes = Resources.WOOD;
+                            if (res.equals("cloth")) ownRes = Resources.CLOTH;
+                            if (res.equals("science")) ownRes = Resources.SCIENCE;
+                            if (res.equals("military")) ownRes = Resources.MILITARY;
+                            if (res.equals("compass")) ownRes = Resources.COMPASS;
+                            if (res.equals("gear")) ownRes = Resources.GEAR;
+                            if (res.equals("paper")) ownRes = Resources.PAPER;
+                            if (res.equals("tablet")) ownRes = Resources.TABLET;
+//                            boards.add(new Board(boardName, ownRes, null));
+//                            Add aux ressources du player
+                        }
                     //JSONArray test = (JSONArray) objects[0];
                     //System.out.println("[CLIENT]Answer: " + objects[0].toString());
                     setAmountGold(3);

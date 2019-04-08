@@ -49,6 +49,12 @@ public class Player {
             gold = 0;
         }
     }
+    
+    public void addRessources(){
+    // Vérifier si ressources déjà existante
+    // Si existe déjà, ajouter
+    // Sinon créer ressources
+    }
 
     @Override
     public String toString() {
