@@ -2,8 +2,10 @@ package game;
 
 import java.util.List;
 import java.util.Map;
+import java.io.UnsupportedEncodingException;
 
 import org.json.simple.JSONObject;
+import sun.rmi.runtime.Log;
 
 public class Card {
     private String name;
@@ -49,6 +51,7 @@ public class Card {
     }
 
     public String getName() {
+
         return name;
     }
 

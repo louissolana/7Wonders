@@ -164,6 +164,8 @@ public class Client {
         res.put("command", "DISCARD");
         res.put("card", sacrificed.getName());
         System.out.println(sacrificed.getName() + " a été défaussée");
+        player.getHand().remove(sacrificed);
+        //System.out.println(player.getHand().size());
         return res;
     }
 

@@ -31,6 +31,21 @@ public class Main {
         list.add(c1);
         list.add(c2);
         list.add(c3);
+
+        List<Card> list2 = new ArrayList<Card>();
+        list2.add(c1);
+        list2.add(c2);
+        list2.add(c3);
+
+        List<Card> list3 = new ArrayList<Card>();
+        list3.add(c1);
+        list3.add(c2);
+        list3.add(c3);
+
+        List<Card> list4 = new ArrayList<Card>();
+        list4.add(c1);
+        list4.add(c2);
+        list4.add(c3);
         
         final List<Player> listPlayer = new ArrayList<Player>();
 
@@ -50,7 +65,7 @@ public class Main {
         break;
         case 2: try {
 				Player p1 = new Player(1, b1, list, null, resourcesContainer, 2, 0 , 1, null, null);
-				Player p2 = new Player(2, b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p2 = new Player(2, b2, list2, null, resourcesContainer, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 			} catch (Exception e) {
@@ -60,8 +75,8 @@ public class Main {
         break;
         case 3: try {
 				Player p1 = new Player(1,b1, list, null, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(2,b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(3,b3, list, null, resourcesContainer, 3, 2 , 1, null, null);
+				Player p2 = new Player(2,b2, list2, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(3,b3, list3, null, resourcesContainer, 3, 2 , 1, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -73,9 +88,9 @@ public class Main {
         case 4: 
 			try {
 				Player p1 = new Player(1,b1, list, null, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(2,b2, list, null, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(3,b3, list, null, resourcesContainer, 3, 2 , 1, null, null);
-				Player p4 = new Player(4,b4, list, null, resourcesContainer, 2, 1 , 3, null, null);
+				Player p2 = new Player(2,b2, list2, null, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(3,b3, list3, null, resourcesContainer, 3, 2 , 1, null, null);
+				Player p4 = new Player(4,b4, list4, null, resourcesContainer, 2, 1 , 3, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
