@@ -21,9 +21,6 @@ public class Client {
 
     final Object stopObject = new Object();
 
-
-
-
     public Client(int id, Player player, String url, int port) {
         this.id = id;
         this.player = player;
@@ -34,6 +31,13 @@ public class Client {
             socket = IO.socket(urlServ + ":" + port);
 
             // action pour se connecter
+            /**
+             * Le client se connecte, il envoie son indentifiant au serveur
+             * Le serveur possède un Map(id, socketclient) et crée ou se met à jour quand des clients communiquent
+             * Tous les échanges clients -> serveurs doivent commencer par l'id du client
+             *
+             * action: "connectAndWait", message: {"id":"x"}
+             */
             socket.on("connect", new Emitter.Listener() {
                 public void call(Object... objects) {
                     /*JSONObject toSend = action();
@@ -59,6 +63,10 @@ public class Client {
             });
 
             // action du tour de jeu, deja fait
+            /**
+             * Action à effectuer pendant un tour: défausser(DISCARD), jouer(PLAY), construire(BUILD)
+             * action: "card", message: {"id":"x", "command":"DISCARD", "card":"nom_de_la_carte"}
+             */
             socket.on("play", new Emitter.Listener() {
                 public void call(Object... objects) {
                     JSONObject toSend = action();
@@ -67,11 +75,30 @@ public class Client {
             });
 
             // resultat de l'action effectuee, a traiter
+            /**
+             * Le serveur répond à l'action, il faut la traiter en parsant le json obtenu
+             * {"action":"DISCARDED", "resource":"x"}
+             * On envoie ensuite la main au serveur
+             * action: "hand", message: {"id":"x", "hand":[{}{}...{}]}  <-- liste des cartes en main
+             */
+            //TODO: traiter la réponse -> ajouter la ressource au set de ressources du joueur OU augmenter de 1 la ressource si elle est déjà présente
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
                     //JSONArray test = (JSONArray) objects[0];
                     //System.out.println("[CLIENT]Answer: " + objects[0].toString());
                     setAmountGold(3);
+                    //TODO on traite ici
+                    //TODO puis on envoie la main au serveur pour mettre fin au tour
+                }
+            });
+
+            /**
+             * On reçoit la nouvelle main
+             * {"action":"NEW_HAND", "hand":[{}{}...{}]} <--- JSONArray contenant x JSONObject
+             */
+            socket.on("next_turn", new Emitter.Listener() {
+                public void call(Object... objects) {
+                    //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
                 }
             });
 
