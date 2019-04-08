@@ -18,7 +18,7 @@ public class Main {
         map2.add(new Cost(Resources.WOOD, 2));
 
         Card c1 = new Card("Mine", Type.RESOURCE, map1, 1);
-        Card c2 = new Card("March�", Type.MARKET, null, 1);
+        Card c2 = new Card("Marche", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);
 
         Board b1 = new Board("Pharos", Resources.STONE, null);
