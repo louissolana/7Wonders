@@ -3,11 +3,19 @@ package client;
 import game.Card;
 import game.Cost;
 import game.Player;
+import game.Resources;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import org.json.JSONObject;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 import java.util.Random;
@@ -18,6 +26,7 @@ public class Client {
     private Socket socket;
     private String urlServ;
     private int portServ;
+    private Resources recupRes;
 
     final Object stopObject = new Object();
 
@@ -26,6 +35,7 @@ public class Client {
         this.player = player;
         this.urlServ = url;
         this.portServ = port;
+        this.recupRes = null;
 
         try {
             socket = IO.socket(urlServ + ":" + port);
@@ -85,36 +95,46 @@ public class Client {
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
                     JSONParser parser = new JSONParser();
-
+                    recupRes = null;
                     try {
                         String inputFile = new File("src/main/resources/cards.json").getAbsolutePath();
                         JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
 
                         for(Object o: infos) {
                             JSONObject jo = (JSONObject)o;
-                            String res = (String)jo.get("own");
+                            String res = (String)jo.get("cost"); 
+                            String[] matière = res.split("_");
                             Resources ownRes = Resources.GOLD;
-                            if (res.equals("clay")) ownRes = Resources.CLAY;
-                            if (res.equals("stone")) ownRes = Resources.STONE;
-                            if (res.equals("ore")) ownRes = Resources.ORE;
-                            if (res.equals("wood")) ownRes = Resources.WOOD;
-                            if (res.equals("cloth")) ownRes = Resources.CLOTH;
-                            if (res.equals("science")) ownRes = Resources.SCIENCE;
-                            if (res.equals("military")) ownRes = Resources.MILITARY;
-                            if (res.equals("compass")) ownRes = Resources.COMPASS;
-                            if (res.equals("gear")) ownRes = Resources.GEAR;
-                            if (res.equals("paper")) ownRes = Resources.PAPER;
-                            if (res.equals("tablet")) ownRes = Resources.TABLET;
-//                            boards.add(new Board(boardName, ownRes, null));
-//                            Add aux ressources du player
+                            if (matière[0].equals("clay")) ownRes = Resources.CLAY;
+                            if (matière[0].equals("stone")) ownRes = Resources.STONE;
+                            if (matière[0].equals("ore")) ownRes = Resources.ORE;
+                            if (matière[0].equals("wood")) ownRes = Resources.WOOD;
+                            if (matière[0].equals("cloth")) ownRes = Resources.CLOTH;
+                            if (matière[0].equals("science")) ownRes = Resources.SCIENCE;
+                            if (matière[0].equals("military")) ownRes = Resources.MILITARY;
+                            if (matière[0].equals("compass")) ownRes = Resources.COMPASS;
+                            if (matière[0].equals("gear")) ownRes = Resources.GEAR;
+                            if (matière[0].equals("paper")) ownRes = Resources.PAPER;
+                            if (matière[0].equals("tablet")) ownRes = Resources.TABLET;
+                            recupRes = ownRes; // Add aux ressources du player
+                            //player.addResources(ownRes);
                         }
+                    }  catch (IOException e) {
+                        e.printStackTrace();
+                    }  catch (ParseException e) {
+                        e.printStackTrace();
+                    
+                    }
+                    
+                
                     //JSONArray test = (JSONArray) objects[0];
                     //System.out.println("[CLIENT]Answer: " + objects[0].toString());
-                    setAmountGold(3);
+ //                   setAmountGold(3);
                     //TODO on traite ici
                     //TODO puis on envoie la main au serveur pour mettre fin au tour
                 }
             });
+            player.addResources(recupRes);
 
             /**
              * On reÃ§oit la nouvelle main
@@ -215,7 +235,7 @@ public class Client {
         JSONObject res = new JSONObject();
         res.put("command", "DISCARD");
         res.put("card", sacrificed.getName());
-        System.out.println(sacrificed.getName() + " a Ã©tÃ© dÃ©faussÃ©e");
+        System.out.println(sacrificed.getName() + " a ete defausse");
         player.getHand().remove(sacrificed);
 
         for(Card c: player.getHand())
@@ -309,7 +329,7 @@ public class Client {
     }
 
     public void displayHand() {
-        System.out.println("NumÃ©ro du Joueur : " + player.getId());
+        System.out.println("Numero du Joueur : " + player.getId());
         for (Card c: player.getHand()
         ) {
             System.out.println(c.toString());
