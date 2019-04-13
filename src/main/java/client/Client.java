@@ -8,12 +8,13 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,7 +31,7 @@ public class Client {
 
     final Object stopObject = new Object();
 
-    public Client(int id, Player player, String url, int port) {
+    public Client(final int id, Player player, String url, int port) {
         this.id = id;
         this.player = player;
         this.urlServ = url;
@@ -50,11 +51,9 @@ public class Client {
              */
             socket.on("connect", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    /*JSONObject toSend = action();
+                    JSONObject toSend = new JSONObject();
                     toSend.put("id", getId());
-                    socket.emit("connectAndWait", toSend);*/
-                    JSONObject toSend = action();
-                    socket.emit("card", toSend);
+                    socket.emit("connectAndWait", toSend.toString());
                 }
             });
 
@@ -69,6 +68,11 @@ public class Client {
             socket.on("initial", new Emitter.Listener() {
                 public void call(Object... objects) {
                     // utlisation de setters + mouliner les donnees recues -> s'inspirer de Generator
+                    if((Integer) objects[0] == id) {
+                        System.out.println("[CLIENT"+id+"]received on initial: " + objects[1]);
+                        getPlayer().setHand(Card.JsonToCard((String)objects[1]));
+                        displayHand();
+                    }
                 }
             });
 
@@ -80,7 +84,7 @@ public class Client {
             socket.on("play", new Emitter.Listener() {
                 public void call(Object... objects) {
                     JSONObject toSend = action();
-                    socket.emit("card", toSend);
+                    socket.emit("card", toSend.toString());
                 }
             });
 
@@ -94,58 +98,48 @@ public class Client {
             //TODO: traiter la rÃ©ponse -> ajouter la ressource au set de ressources du joueur OU augmenter de 1 la ressource si elle est dÃ©jÃ  prÃ©sente
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
+                    System.out.println("objects[0]: " + objects[0]);
                     JSONParser parser = new JSONParser();
                     recupRes = null;
                     try {
-                        String inputFile = new File("src/main/resources/cards.json").getAbsolutePath();
-                        JSONArray infos = (JSONArray)parser.parse(new FileReader(inputFile));
+                        JSONObject infos = (JSONObject) parser.parse(new FileReader((String)objects[0]));
 
-                        for(Object o: infos) {
-                            JSONObject jo = (JSONObject)o;
-                            String res = (String)jo.get("cost"); 
-                            String[] matière = res.split("_");
-                            Resources ownRes = Resources.GOLD;
-                            if (matière[0].equals("clay")) ownRes = Resources.CLAY;
-                            if (matière[0].equals("stone")) ownRes = Resources.STONE;
-                            if (matière[0].equals("ore")) ownRes = Resources.ORE;
-                            if (matière[0].equals("wood")) ownRes = Resources.WOOD;
-                            if (matière[0].equals("cloth")) ownRes = Resources.CLOTH;
-                            if (matière[0].equals("science")) ownRes = Resources.SCIENCE;
-                            if (matière[0].equals("military")) ownRes = Resources.MILITARY;
-                            if (matière[0].equals("compass")) ownRes = Resources.COMPASS;
-                            if (matière[0].equals("gear")) ownRes = Resources.GEAR;
-                            if (matière[0].equals("paper")) ownRes = Resources.PAPER;
-                            if (matière[0].equals("tablet")) ownRes = Resources.TABLET;
-                            recupRes = ownRes; // Add aux ressources du player
-                            //player.addResources(ownRes);
-                        }
-                    }  catch (IOException e) {
-                        e.printStackTrace();
-                    }  catch (ParseException e) {
-                        e.printStackTrace();
-                    
+                        String res = (String)infos.get("effect");
+                        String[] matiere = res.split("_");
+                        Resources ownRes = Resources.GOLD;
+                        if (matiere[0].equals("clay")) ownRes = Resources.CLAY;
+                        if (matiere[0].equals("stone")) ownRes = Resources.STONE;
+                        if (matiere[0].equals("ore")) ownRes = Resources.ORE;
+                        if (matiere[0].equals("wood")) ownRes = Resources.WOOD;
+                        if (matiere[0].equals("cloth")) ownRes = Resources.CLOTH;
+                        if (matiere[0].equals("science")) ownRes = Resources.SCIENCE;
+                        if (matiere[0].equals("military")) ownRes = Resources.MILITARY;
+                        if (matiere[0].equals("compass")) ownRes = Resources.COMPASS;
+                        if (matiere[0].equals("gear")) ownRes = Resources.GEAR;
+                        if (matiere[0].equals("paper")) ownRes = Resources.PAPER;
+                        if (matiere[0].equals("tablet")) ownRes = Resources.TABLET;
+                        recupRes = ownRes; // Add aux ressources du player
+                        getPlayer().addResources(ownRes, Integer.parseInt(matiere[1]));
+                        } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
                     }
-                    
-                
-                    //JSONArray test = (JSONArray) objects[0];
-                    //System.out.println("[CLIENT]Answer: " + objects[0].toString());
- //                   setAmountGold(3);
-                    //TODO on traite ici
-                    //TODO puis on envoie la main au serveur pour mettre fin au tour
                 }
-            });
-            player.addResources(recupRes);
+                });
 
-            /**
-             * On reÃ§oit la nouvelle main
-             * {"action":"NEW_HAND", "hand":[{}{}...{}]} <--- JSONArray contenant x JSONObject
-             */
-            socket.on("next_turn", new Emitter.Listener() {
-                public void call(Object... objects) {
+                /**
+                 * On reÃ§oit la nouvelle main
+                 * {"action":"NEW_HAND", "hand":[{}{}...{}]} <--- JSONArray contenant x JSONObject
+                 */
+                socket.on("next_turn", new Emitter.Listener() {
+                    public void call(Object... objects) {
 
-                    //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme Ã©tant la nouvelle main
-                }
-            });
+                        //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme Ã©tant la nouvelle main
+                    }
+                });
 
             socket.on("disconnect", new Emitter.Listener() {
                 public void call(Object... objects) {
@@ -156,7 +150,6 @@ public class Client {
                     }
                 }
             });
-
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -348,5 +341,9 @@ public class Client {
 
     public int getId() {
         return id;
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }

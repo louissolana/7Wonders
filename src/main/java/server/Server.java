@@ -9,7 +9,9 @@ import com.corundumstudio.socketio.listener.DataListener;
 import game.Board;
 import game.Card;
 import org.json.simple.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.*;
 
@@ -17,37 +19,39 @@ public class Server {
     private SocketIOServer server;
     final Object waitObject = new Object();
     private Generator cards;
-    //TODO creer Map<id, socketclient> pour stocker et mettre a jour les infos clients
+    final Map<Long, SocketIOClient> connections = new HashMap<Long, SocketIOClient>();
+    private int counter;
 
     public Server(Configuration config){
-
+        counter = 0;
         cards = new Generator(4);
         server = new SocketIOServer(config);
-        //List<JSONArray> hands = generateHands(4);
 
-        //TODO: ajouter un compteur de clients pour savoir quand envoyer la sauce chef
-        /**
-         * Attendre les clients, puis distribuer a tous (via une boucle)
-         * {"boardName":"XXX", "own":"stone", "hand":[...]}
-         * focus sur "hand":[...] :
-         *     {"cardName":"YYY", "age":"1", "type":"science", "cost": []} <-- cas cout nul
-         *          cost": [{"res":"gold_1"},{"res":"wood_2"}] par exemple
-         */
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient socketIOClient) {
                 System.out.println("[SERVER]Receive call from " + socketIOClient.getRemoteAddress());
-                //TODO mettre a jour la Map + incrementer compteur, une fois le bon nombre de clients, envoyer
-                // mains & plateaux a chacun des joueurs
-                /*
-                    soit foreach sur le map, soit for classique
-                    sur chaque socclient: socClient.sendEvent("initial", board&Hand);
-                 */
-                //TODO on remet a 0 le compteur pour temporiser
             }
         });
 
-        server.addEventListener("card", JSONObject.class, new DataListener<JSONObject>() {
-            public void onData(SocketIOClient socketIOClient, JSONObject jsonObject, AckRequest ackRequest) throws Exception {
+        server.addEventListener("connectAndWait", String.class, new DataListener<String>() {
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+                System.out.println("[SERVER]Client arrived: " + s);
+                JSONParser parser = new JSONParser();
+                try {
+                    JSONObject object = (JSONObject)parser.parse(s);
+                    Long id = (Long)object.get("id");
+                    updateMap(id, socketIOClient);
+                    List<JSONArray> hands = generateHands(4);
+                    socketIOClient.sendEvent("initial", id, hands.get(counter).toString());
+                    counter++;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        server.addEventListener("card", String.class, new DataListener<String>() {
+            public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
                 treatment(socketIOClient);
 
                 synchronized (waitObject) {
@@ -57,8 +61,8 @@ public class Server {
         });
 
         // on reçoit la main de chaque joueur
-        server.addEventListener("hand", org.json.simple.JSONObject.class, new DataListener<org.json.simple.JSONObject>() {
-            public void onData(SocketIOClient socketIOClient, org.json.simple.JSONObject jsonObject, AckRequest ackRequest) throws Exception {
+        server.addEventListener("hand", String.class, new DataListener<String>() {
+            public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
 
             }
         });
@@ -72,7 +76,7 @@ public class Server {
         for(int i = 0; i < players; ++i) {
             JSONArray tmp = new JSONArray();
             for(int j = 0; j < 7; ++j) {
-                tmp.add((org.json.simple.JSONObject)cardList.get(j + i*7).CardToJson());
+                tmp.add(cardList.get(j + i*7).CardToJson());
             }
             res.add(tmp);
         }
@@ -98,7 +102,7 @@ public class Server {
         answer.put("effect", "gold_3");
         //FirstOne.put("result", "DISCARD");
         //SecondOne.put("gold", "3");
-        soc.sendEvent("answer", answer);
+        soc.sendEvent("answer", answer.toString());
 
         /*JSONArray cardJson = new JSONArray();
 
@@ -122,5 +126,9 @@ public class Server {
         }
 
         //server.stop();
+    }
+
+    private void updateMap(Long id, SocketIOClient client) {
+        connections.put(id, client);
     }
 }

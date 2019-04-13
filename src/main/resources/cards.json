@@ -19,7 +19,7 @@
   {"name": "Verrerie", "age": "1", "type": "CRAFT", "cost": [], "player":  "6"},
   {"name": "Presse", "age": "1", "type": "CRAFT", "cost": [], "player":  "3"},
   {"name": "Presse", "age": "1", "type": "CRAFT", "cost": [], "player":  "6"},
-  {"name": "Preteur sur gages", "age": "1", "type": "SOCI AL", "cost":  [], "player": "4"},
+  {"name": "Preteur sur gages", "age": "1", "type": "SOCIAL", "cost":  [], "player": "4"},
   {"name": "Preteur sur gages", "age": "1", "type": "SOCIAL", "cost":  [], "player": "7"},
   {"name": "Bain", "age": "1", "type": "SOCIAL", "cost":  [{"res":  "stone_1"}], "player": "3"},
   {"name": "Bain", "age": "1", "type": "SOCIAL", "cost":  [{"res":  "stone_1"}], "player": "7"},

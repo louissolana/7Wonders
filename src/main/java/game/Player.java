@@ -50,22 +50,26 @@ public class Player {
 		}
 	}
 
-	public void addResources(Resources ownres){
+	public void addResources(Resources ownres, int qte){
 		boolean exist = false;
 		if(ownres == null) {
 
 		}else {
 			for (Map.Entry<Resources, Integer> map: resources.entrySet()) { // On parcourt la map de resources
-				if(ownres == map.getKey()) { // On vérifie si la resources existe déjà et on ajoute 1
-					resources.put(ownres, map.getValue() + 1);
+				if(ownres == map.getKey()) { // On vï¿½rifie si la resources existe dï¿½jï¿½ et on ajoute 1
+					resources.put(ownres, map.getValue() + qte);
 					exist = true;
 				}
 			}
 
 			if(exist ==  false) {
-				resources.put(ownres, 1); // Sinon, on crée la resources
+				resources.put(ownres, qte); // Sinon, on crï¿½e la resources
 			}
 		}
+	}
+
+	public void setHand(List<Card> list) {
+		this.hand = list;
 	}
 
 	@Override
@@ -90,8 +94,6 @@ public class Player {
 				sb.append(c.toString());
 			}
 		}
-
-
 		return sb.toString();
 	}
 }

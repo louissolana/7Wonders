@@ -1,11 +1,12 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.io.UnsupportedEncodingException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import sun.rmi.runtime.Log;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Card {
     private String name;
@@ -23,15 +24,51 @@ public class Card {
     public JSONObject CardToJson()
     {
     	JSONObject obj = new JSONObject();
-    	obj.put("cardName", name);
-    	obj.put("cardType", type);
-    	if(cost.size() >= 0)
-    	{
-    		obj.put("cardCost", cost.get(0));
-    	}
-    	obj.put("cardAge", age);
-    	
+    	obj.put("name", name);
+    	obj.put("type", Type.parseType(type));
+    	obj.put("age", ""+age);
+        JSONArray costs = new JSONArray();
+    	if (cost != null) {
+            for (Cost c: cost
+                 ) {
+                JSONObject o = new JSONObject();
+                o.put("res", Resources.parseResource(c.getRes())+"_"+c.getQuant());
+                costs.add(o);
+            }
+        }
+    	obj.put("cost", costs);
     	return obj;
+    }
+
+    public static List<Card> JsonToCard(String json) {
+        List<Card> res = new ArrayList<Card>();
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray cards = (JSONArray)parser.parse(json);
+            for (Object o: cards
+                 ) {
+                JSONObject ca = (JSONObject)o;
+                String ca_name = (String)ca.get("name");
+                String ca_type = (String)ca.get("type");
+                String ca_age = (String)ca.get("age");
+                JSONArray ca_costs = (JSONArray)ca.get("cost");
+                List<Cost> costs = new ArrayList<Cost>();
+                if(!ca_costs.isEmpty()) {
+                    for (Object ob: ca_costs) {
+                        JSONObject tmp = (JSONObject)ob;
+                        String co = (String)tmp.get("res");
+                        String[] split = co.split("_");
+                        costs.add(new Cost(Resources.parseStringResource(split[0]), Integer.parseInt(split[1])));
+                    }
+                    res.add(new Card(ca_name, Type.parseStringType(ca_type), costs, Integer.parseInt(ca_age)));
+                } else {
+                    res.add(new Card(ca_name, Type.parseStringType(ca_type), null, Integer.parseInt(ca_age)));
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @Override
