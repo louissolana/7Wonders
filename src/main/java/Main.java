@@ -61,7 +61,7 @@ public class Main {
         //Check Nb joueur
         switch(nbJoueur) {
         case 1: try {
-				Player p1 = new Player(1, b1, list, oldList, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -69,8 +69,8 @@ public class Main {
 			} 
         break;
         case 2: try {
-				Player p1 = new Player(1, b1, list, oldList, resourcesContainer, 2, 0 , 1, null, null);
-				Player p2 = new Player(2, b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, 2, 0 , 1, null, null);
+				Player p2 = new Player(1, b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 			} catch (Exception e) {
@@ -79,9 +79,9 @@ public class Main {
 			} 
         break;
         case 3: try {
-				Player p1 = new Player(1,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(2,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(3,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
+				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
+				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -92,10 +92,10 @@ public class Main {
         break;
         case 4: 
 			try {
-				Player p1 = new Player(1,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(2,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(3,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
-				Player p4 = new Player(4,b4, list4, oldList4, resourcesContainer, 2, 1 , 3, null, null);
+				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
+				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
+				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
+				Player p4 = new Player(3,b4, list4, oldList4, resourcesContainer, 2, 1 , 3, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -107,9 +107,9 @@ public class Main {
         break;
         }
         
-        for(int i=0;i<listPlayer.size();i++) {
+        /*for(int i=0;i<listPlayer.size();i++) {
         //System.out.println(listPlayer.get(i).toString());
-        }
+        }*/
 
         //client serveur gogogo
         final Configuration conf = new Configuration();
@@ -136,7 +136,7 @@ public class Main {
         	final int ind = i;        
         	Runnable ru = new Runnable() {
         		public void run() {
-        			Client client = new Client(ind+1, listPlayer.get(ind), "http://127.0.0.1", 8080);
+        			Client client = new Client(ind, listPlayer.get(ind), "http://127.0.0.1", 8080);
         	        client.connect();
         		}
         	};

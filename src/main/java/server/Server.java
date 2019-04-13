@@ -53,6 +53,7 @@ public class Server {
         server.addEventListener("card", String.class, new DataListener<String>() {
             public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
                 Long retrievedId = extractId(string);
+                updateMap(retrievedId, socketIOClient);
                 JSONObject answer = new JSONObject();
                 answer.put("result","DISCARD");
                 answer.put("effect", "gold_3");
@@ -65,9 +66,18 @@ public class Server {
         });
 
         // on reçoit la main de chaque joueur
-        server.addEventListener("hand", String.class, new DataListener<String>() {
+        server.addEventListener("give_hand", String.class, new DataListener<String>() {
             public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
-
+                JSONParser parser = new JSONParser();
+                JSONObject object = (JSONObject)parser.parse(string);
+                Long id = (Long)object.get("id");
+                updateMap(id, socketIOClient);
+                System.out.println("[SERVER]Received hand by client " + id + ", hand: " + string);
+                // on transfert au voisin: (id + 1)%4  <-- on distribue au voisin de gauche, (id - 1)%4 <-- on distribuera au voisin de droite
+                // d'ou l'interet de garder a jour le map (id, socketclient)
+                JSONArray handToSend = (JSONArray)object.get("hand");
+                System.out.println("[SERVER]id, next id: " + id + ", " + (id+1)%4);
+                connections.get((id+1)%4).sendEvent("next_turn", (id+1)%4, handToSend.toString());
             }
         });
     }

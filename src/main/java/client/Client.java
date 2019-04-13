@@ -103,7 +103,6 @@ public class Client {
              * On envoie ensuite la main au serveur
              * action: "hand", message: {"id":"x", "hand":[{}{}...{}]}  <-- liste des cartes en main
              */
-            //TODO: traiter la réponse -> ajouter la ressource au set de ressources du joueur OU augmenter de 1 la ressource si elle est déjà présente
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
                     String val = (String)objects[0];
@@ -117,6 +116,13 @@ public class Client {
                             String res = (String) infos.get("effect");
                             String[] matiere = res.split("_");
                             getPlayer().addResources(Resources.parseStringResource(matiere[0]), Integer.parseInt(matiere[1]));
+                            //on jsonifie la main actuelle pour ensuite l'envoyer au serveur
+                            JSONArray array = new JSONArray();
+                            for(Card c : getPlayer().getHand()) {array.add(c.CardToJson());}
+                            JSONObject toSend = new JSONObject();
+                            toSend.put("id", getId());
+                            toSend.put("hand", array);
+                            socket.emit("give_hand", toSend.toString());
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
@@ -130,7 +136,9 @@ public class Client {
              */
             socket.on("next_turn", new Emitter.Listener() {
                 public void call(Object... objects) {
-
+                    if((Integer)objects[0] == id) {
+                        System.out.println("[CLIENT" + id + "] New hand received: " + objects[1]);
+                    }
                     //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
                 }
             });
