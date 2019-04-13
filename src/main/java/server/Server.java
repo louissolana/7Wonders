@@ -52,7 +52,11 @@ public class Server {
 
         server.addEventListener("card", String.class, new DataListener<String>() {
             public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
-                treatment(socketIOClient);
+                Long retrievedId = extractId(string);
+                JSONObject answer = new JSONObject();
+                answer.put("result","DISCARD");
+                answer.put("effect", "gold_3");
+                socketIOClient.sendEvent("answer", ""+retrievedId, answer.toString());
 
                 synchronized (waitObject) {
                     waitObject.notify();
@@ -84,35 +88,11 @@ public class Server {
     }
 
     private void treatment(SocketIOClient soc) {
-        List<Card> listeCards = new ArrayList<Card>();
-        listeCards = cards.generateCards();
-
-
-        List<Board> listeBoards = new ArrayList<Board>();
-        listeBoards = cards.generateBoards();
-
-        HashMap<String,String> FirstOne = new HashMap<String, String>();
-        HashMap<String,String> SecondOne = new HashMap<String, String>();
-
-        //answer.add(FirstOne);
-        //answer.add(SecondOne);
 
         JSONObject answer = new JSONObject();
         answer.put("result","DISCARD");
         answer.put("effect", "gold_3");
-        //FirstOne.put("result", "DISCARD");
-        //SecondOne.put("gold", "3");
         soc.sendEvent("answer", answer.toString());
-
-        /*JSONArray cardJson = new JSONArray();
-
-        for(Card card: listeCards)
-        {
-            cardJson.put(card.CardToJson());
-        }
-
-
-        soc.sendEvent("answer", cardJson);*/
     }
 
     public void startServer() {
@@ -130,5 +110,16 @@ public class Server {
 
     private void updateMap(Long id, SocketIOClient client) {
         connections.put(id, client);
+    }
+
+    private Long extractId(String json) {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject obj = (JSONObject)parser.parse(json);
+            return (Long) obj.get("id");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (long)0;
     }
 }

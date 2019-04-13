@@ -67,11 +67,17 @@ public class Client {
              **/
             socket.on("initial", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    // utlisation de setters + mouliner les donnees recues -> s'inspirer de Generator
+                    //si on est le client concerne on traite l'evenement
                     if((Integer) objects[0] == id) {
                         System.out.println("[CLIENT"+id+"]received on initial: " + objects[1]);
                         getPlayer().setHand(Card.JsonToCard((String)objects[1]));
-                        displayHand();
+                        //displayHand(); check que la main est bien traitee
+
+                        //on joue la 1re carte
+                        JSONObject toSend = action();
+                        toSend.put("id", getId());
+                        System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
+                        socket.emit("card", toSend.toString());
                     }
                 }
             });
@@ -84,6 +90,8 @@ public class Client {
             socket.on("play", new Emitter.Listener() {
                 public void call(Object... objects) {
                     JSONObject toSend = action();
+                    toSend.put("id", getId());
+                    System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
                     socket.emit("card", toSend.toString());
                 }
             });
@@ -98,48 +106,34 @@ public class Client {
             //TODO: traiter la réponse -> ajouter la ressource au set de ressources du joueur OU augmenter de 1 la ressource si elle est déjà présente
             socket.on("answer", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    System.out.println("objects[0]: " + objects[0]);
-                    JSONParser parser = new JSONParser();
-                    recupRes = null;
-                    try {
-                        JSONObject infos = (JSONObject) parser.parse(new FileReader((String)objects[0]));
+                    String val = (String)objects[0];
+                    if(Integer.parseInt(val) == id) {
 
-                        String res = (String)infos.get("effect");
-                        String[] matiere = res.split("_");
-                        Resources ownRes = Resources.GOLD;
-                        if (matiere[0].equals("clay")) ownRes = Resources.CLAY;
-                        if (matiere[0].equals("stone")) ownRes = Resources.STONE;
-                        if (matiere[0].equals("ore")) ownRes = Resources.ORE;
-                        if (matiere[0].equals("wood")) ownRes = Resources.WOOD;
-                        if (matiere[0].equals("cloth")) ownRes = Resources.CLOTH;
-                        if (matiere[0].equals("science")) ownRes = Resources.SCIENCE;
-                        if (matiere[0].equals("military")) ownRes = Resources.MILITARY;
-                        if (matiere[0].equals("compass")) ownRes = Resources.COMPASS;
-                        if (matiere[0].equals("gear")) ownRes = Resources.GEAR;
-                        if (matiere[0].equals("paper")) ownRes = Resources.PAPER;
-                        if (matiere[0].equals("tablet")) ownRes = Resources.TABLET;
-                        recupRes = ownRes; // Add aux ressources du player
-                        getPlayer().addResources(ownRes, Integer.parseInt(matiere[1]));
+                        System.out.println("objects[1]: " + objects[1]);
+                        JSONParser parser = new JSONParser();
+                        try {
+                            JSONObject infos = (JSONObject) parser.parse((String) objects[1]);
+
+                            String res = (String) infos.get("effect");
+                            String[] matiere = res.split("_");
+                            getPlayer().addResources(Resources.parseStringResource(matiere[0]), Integer.parseInt(matiere[1]));
                         } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    } catch (FileNotFoundException e1) {
-                        e1.printStackTrace();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                            e1.printStackTrace();
+                        }
                     }
                 }
-                });
+            });
 
-                /**
-                 * On reçoit la nouvelle main
-                 * {"action":"NEW_HAND", "hand":[{}{}...{}]} <--- JSONArray contenant x JSONObject
-                 */
-                socket.on("next_turn", new Emitter.Listener() {
-                    public void call(Object... objects) {
+            /**
+             * On reçoit la nouvelle main
+             * {"action":"NEW_HAND", "hand":[{}{}...{}]} <--- JSONArray contenant x JSONObject
+             */
+            socket.on("next_turn", new Emitter.Listener() {
+                public void call(Object... objects) {
 
-                        //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
-                    }
-                });
+                    //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
+                }
+            });
 
             socket.on("disconnect", new Emitter.Listener() {
                 public void call(Object... objects) {
