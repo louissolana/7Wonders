@@ -3,6 +3,9 @@ import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketConfig;
 import game.*;
 import server.Server;
+import strategy.DiscardRandomStrategy;
+import strategy.DiscardStrategy;
+import strategy.Stragegy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,6 +132,9 @@ public class Main {
             }
         };
 
+        Stragegy discard = new DiscardStrategy();
+        final Stragegy rndDiscard = new DiscardRandomStrategy();
+
         new Thread(r).start();
 
         for(int i = 0;i<listPlayer.size();i++)
@@ -136,7 +142,7 @@ public class Main {
         	final int ind = i;        
         	Runnable ru = new Runnable() {
         		public void run() {
-        			Client client = new Client(ind, listPlayer.get(ind), "http://127.0.0.1", 8080);
+        			Client client = new Client(ind, listPlayer.get(ind), rndDiscard, "http://127.0.0.1", 8080);
         	        client.connect();
         		}
         	};

@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import strategy.Stragegy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,12 +29,14 @@ public class Client {
     private String urlServ;
     private int portServ;
     private Resources recupRes;
+    private Stragegy stragegy;
 
     final Object stopObject = new Object();
 
-    public Client(final int id, Player player, String url, int port) {
+    public Client(final int id, final Player player, Stragegy str, String url, int port) {
         this.id = id;
         this.player = player;
+        this.stragegy = str;
         this.urlServ = url;
         this.portServ = port;
         this.recupRes = null;
@@ -74,7 +77,7 @@ public class Client {
                         //displayHand(); check que la main est bien traitee
 
                         //on joue la 1re carte
-                        JSONObject toSend = action();
+                        JSONObject toSend = stragegy.action(player.getHand());
                         toSend.put("id", getId());
                         System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
                         socket.emit("card", toSend.toString());
@@ -89,7 +92,7 @@ public class Client {
              */
             socket.on("play", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    JSONObject toSend = action();
+                    JSONObject toSend = stragegy.action(player.getHand());
                     toSend.put("id", getId());
                     System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
                     socket.emit("card", toSend.toString());
