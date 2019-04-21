@@ -142,6 +142,19 @@ public class Client {
                     if((Integer)objects[0] == id) {
                         System.out.println("[CLIENT" + id + "] New hand received: " + objects[1]);
                     }
+                    if(player.getHand().size() > 1)
+                    {
+                        JSONObject toSend = stragegy.action(player.getHand(), player.getCardsPlayed());
+                        toSend.put("id", getId());
+                        System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
+                        socket.emit("card", toSend.toString());
+                    }
+                    else
+                    {
+                        System.out.println("Fin de l'âge ! ");
+                        // Discard la dernière carte non utilisée puis remplir les listes avec les cartes de l'âge 2.
+
+                    }
                     //TODO comme pour initial, on parse la main pour instancier la nouvelle main puis l'affecter au Player comme étant la nouvelle main
                 }
             });

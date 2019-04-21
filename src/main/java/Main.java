@@ -5,6 +5,7 @@ import game.*;
 import server.Server;
 import strategy.DiscardRandomStrategy;
 import strategy.DiscardStrategy;
+import strategy.PlaySmartStrategy;
 import strategy.Stragegy;
 
 import java.util.ArrayList;
@@ -139,6 +140,8 @@ public class Main {
 
         Stragegy discard = new DiscardStrategy();
         final Stragegy rndDiscard = new DiscardRandomStrategy();
+        final Stragegy scientistMilitary = new PlaySmartStrategy(Type.SCIENCE, Type.MILITARY);
+
 
         new Thread(r).start();
 
