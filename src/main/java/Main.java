@@ -24,10 +24,10 @@ public class Main {
         Card c2 = new Card("Marche", Type.MARKET, null, 1);
         Card c3 = new Card("Tisserie", Type.CRAFT, map2, 1);
 
-        Board b1 = new Board("Pharos", Resources.STONE, null);
-        Board b2 = new Board("Atlantis", Resources.STONE, null);
-        Board b3 = new Board("Uruk", Resources.STONE, null);
-        Board b4 = new Board("Venezia", Resources.STONE, null);
+        Board b1 = new Board("Pharos", Resources.STONE);
+        Board b2 = new Board("Atlantis", Resources.STONE);
+        Board b3 = new Board("Uruk", Resources.STONE);
+        Board b4 = new Board("Venezia", Resources.STONE);
 
 
         List<Card> list = new ArrayList<Card>();
@@ -55,6 +55,11 @@ public class Main {
         List<Card> oldList3 = new ArrayList<Card>();
         List<Card> oldList4 = new ArrayList<Card>();
 
+        List<Card> played = new ArrayList<Card>();
+        List<Card> played2 = new ArrayList<Card>();
+        List<Card> played3 = new ArrayList<Card>();
+        List<Card> played4 = new ArrayList<Card>();
+
         final List<Player> listPlayer = new ArrayList<Player>();
 
         Map<Resources, Integer> resourcesContainer = new HashMap<Resources, Integer>();
@@ -64,7 +69,7 @@ public class Main {
         //Check Nb joueur
         switch(nbJoueur) {
         case 1: try {
-				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, played, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -72,8 +77,8 @@ public class Main {
 			} 
         break;
         case 2: try {
-				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, 2, 0 , 1, null, null);
-				Player p2 = new Player(1, b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
+				Player p1 = new Player(0, b1, list, oldList, resourcesContainer, played, 2, 0 , 1, null, null);
+				Player p2 = new Player(1, b2, list2, oldList2, resourcesContainer, played2, 3, 0 , 0, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 			} catch (Exception e) {
@@ -82,9 +87,9 @@ public class Main {
 			} 
         break;
         case 3: try {
-				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
+				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, played, 1, 2 , 1, null, null);
+				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, played2, 3, 0 , 0, null, null);
+				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, played3, 3, 2 , 1, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);
@@ -95,10 +100,10 @@ public class Main {
         break;
         case 4: 
 			try {
-				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, 1, 2 , 1, null, null);
-				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, 3, 0 , 0, null, null);
-				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, 3, 2 , 1, null, null);
-				Player p4 = new Player(3,b4, list4, oldList4, resourcesContainer, 2, 1 , 3, null, null);
+				Player p1 = new Player(0,b1, list, oldList, resourcesContainer, played, 1, 2 , 1, null, null);
+				Player p2 = new Player(1,b2, list2, oldList2, resourcesContainer, played2,  3, 0 , 0, null, null);
+				Player p3 = new Player(2,b3, list3, oldList3, resourcesContainer, played3,3, 2 , 1, null, null);
+				Player p4 = new Player(3,b4, list4, oldList4, resourcesContainer, played4,2, 1 , 3, null, null);
 				listPlayer.add(p1);
 				listPlayer.add(p2);
 				listPlayer.add(p3);

@@ -101,7 +101,7 @@ public class Generator {
                 if (res.equals("gear")) ownRes = Resources.GEAR;
                 if (res.equals("paper")) ownRes = Resources.PAPER;
                 if (res.equals("tablet")) ownRes = Resources.TABLET;
-                boards.add(new Board(boardName, ownRes, null));
+                boards.add(new Board(boardName, ownRes));
             }
         } catch (IOException e) {
             e.printStackTrace();
