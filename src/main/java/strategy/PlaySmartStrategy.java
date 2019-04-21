@@ -29,15 +29,32 @@ public class PlaySmartStrategy extends Stragegy {
         for(Card oneCard : hand)
         {
             Type type = oneCard.getType();
+            String name = oneCard.getName();
             if(type == color1)
             {
                 color1Card = true;
                 color1Cards.add(oneCard);
+
+                for(Card cardPlay : cardPlayed)
+                {
+                    if(name == cardPlay.getName())
+                    {
+                        color1Cards.remove(oneCard);
+                    }
+                }
             }
             else if(type == color2)
             {
                 color2Card = true;
                 color2Cards.add(oneCard);
+
+                for(Card cardPlay : cardPlayed)
+                {
+                    if(name == cardPlay.getName())
+                    {
+                        color2Cards.remove(oneCard);
+                    }
+                }
             }
         }
 
@@ -50,6 +67,8 @@ public class PlaySmartStrategy extends Stragegy {
             res.put("card", chosenCard.getName());
             System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
+            cardPlayed.add((chosenCard));
+
 
 
 
@@ -63,6 +82,7 @@ public class PlaySmartStrategy extends Stragegy {
             res.put("card", chosenCard.getName());
             System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
+            cardPlayed.add(chosenCard);
         }
         else{
             Random rand = new Random();

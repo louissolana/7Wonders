@@ -22,15 +22,32 @@ public class ScientistMilitaryStrategy extends Stragegy
         for(Card oneCard : hand)
         {
             String type = oneCard.getType().toString();
+            String name = oneCard.getName();
             if(type == "SCIENCE")
             {
                 scientist = true;
                 scientistCards.add(oneCard);
+
+                for(Card cardPlay : cardPlayed)
+                {
+                    if(name == cardPlay.getName())
+                    {
+                        scientistCards.remove(oneCard);
+                    }
+                }
             }
             else if(type == "MILITARY")
             {
                 military = true;
                 militaryCards.add(oneCard);
+
+                for(Card cardPlay : cardPlayed)
+                {
+                    if(name == cardPlay.getName())
+                    {
+                        militaryCards.remove(oneCard);
+                    }
+                }
             }
         }
 
@@ -43,6 +60,7 @@ public class ScientistMilitaryStrategy extends Stragegy
             res.put("card", chosenCard.getName());
             System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
+            cardPlayed.add((chosenCard));
 
         }
         else if(!scientist && military)
@@ -54,6 +72,7 @@ public class ScientistMilitaryStrategy extends Stragegy
             res.put("card", chosenCard.getName());
             System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
+            cardPlayed.add((chosenCard));
         }
         else{
             Random rand = new Random();
