@@ -77,7 +77,7 @@ public class Client {
                         //displayHand(); check que la main est bien traitee
 
                         //on joue la 1re carte
-                        JSONObject toSend = stragegy.action(player.getHand());
+                        JSONObject toSend = stragegy.action(player.getHand(), player.getCardsPlayed());
                         toSend.put("id", getId());
                         System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
                         socket.emit("card", toSend.toString());
@@ -92,7 +92,7 @@ public class Client {
              */
             socket.on("play", new Emitter.Listener() {
                 public void call(Object... objects) {
-                    JSONObject toSend = stragegy.action(player.getHand());
+                    JSONObject toSend = stragegy.action(player.getHand(), player.getCardsPlayed());
                     toSend.put("id", getId());
                     System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
                     socket.emit("card", toSend.toString());

@@ -9,7 +9,7 @@ public class DiscardStrategy extends Stragegy {
 
     public DiscardStrategy() {}
 
-    public JSONObject action(List<Card> hand) {
+    public JSONObject action(List<Card> hand, List<Card> cardPlayed) {
         Card sacrificed = hand.get(0);
         JSONObject res = new JSONObject();
         res.put("command", "DISCARD");

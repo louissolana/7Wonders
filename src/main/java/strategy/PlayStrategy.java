@@ -9,7 +9,5 @@ public class PlayStrategy extends Stragegy {
 
     public PlayStrategy() {}
 
-    public JSONObject action(List<Card> hand) {
-        return null;
-    }
+    public JSONObject action(List<Card> hand, List<Card> cardPlayed){ return null; }
 }

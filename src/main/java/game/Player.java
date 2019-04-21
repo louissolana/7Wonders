@@ -8,6 +8,7 @@ public class Player {
 	private List<Card> hand;
 	private List<Card> oldHand;
 	private Map<Resources, Integer> resources;
+	private List<Card> cardsPlayed;
 	private int gold;
 	private int victory;
 	private int battle;
@@ -19,12 +20,13 @@ public class Player {
 		return id;
 	}
 
-	public Player(int id, Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, int gold, int victory, int battle, Player playerLeft, Player playerRight) {
+	public Player(int id, Board playerBoard, List<Card> hand, List<Card> oldHand, Map<Resources, Integer> res, List<Card> played, int gold, int victory, int battle, Player playerLeft, Player playerRight) {
 		this.id = id;
 		this.playerBoard = playerBoard;
 		this.hand = hand;
 		this.oldHand = oldHand;
 		this.resources = res;
+		this.cardsPlayed = played;
 		this.gold = gold;
 		this.victory = victory;
 		this.battle = battle;
@@ -37,6 +39,12 @@ public class Player {
 	}
 
 	public List<Card> getOldHand() { return oldHand;}
+
+	public List<Card> getCardsPlayed() {
+		return cardsPlayed;
+	}
+
+
 
 	public Map<Resources, Integer> getResources() {
 		return resources;
@@ -92,6 +100,14 @@ public class Player {
 			for (Card c: hand
 					) {
 				sb.append(c.toString());
+			}
+		}
+
+		if(cardsPlayed != null) {
+			sb.append("Cards played: ");
+			for (Card c: this.cardsPlayed
+			) {
+				sb.append(c.toString() + "\n");
 			}
 		}
 		return sb.toString();

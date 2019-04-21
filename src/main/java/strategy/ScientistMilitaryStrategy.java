@@ -11,7 +11,7 @@ public class ScientistMilitaryStrategy extends Stragegy
 {
     public ScientistMilitaryStrategy() {}
 
-    public JSONObject action(List<Card> hand) {
+    public JSONObject action(List<Card> hand, List<Card> cardPlayed){
 
         JSONObject res = new JSONObject();
         List<Card> scientistCards = new ArrayList<Card>();
@@ -38,10 +38,10 @@ public class ScientistMilitaryStrategy extends Stragegy
         {
             Random rand = new Random();
             int nbAlea = rand.nextInt(scientistCards.size());
-            Card cardPlayed = scientistCards.get(nbAlea);
+            Card chosenCard = scientistCards.get(nbAlea);
             res.put("command", "PLAY");
-            res.put("card", cardPlayed.getName());
-            System.out.println(cardPlayed.getName() + " a ete joue");
+            res.put("card", chosenCard.getName());
+            System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
 
         }
@@ -49,10 +49,10 @@ public class ScientistMilitaryStrategy extends Stragegy
         {
             Random rand = new Random();
             int nbAlea = rand.nextInt(militaryCards.size());
-            Card cardPlayed = militaryCards.get(nbAlea);
+            Card chosenCard = militaryCards.get(nbAlea);
             res.put("command", "PLAY");
-            res.put("card", cardPlayed.getName());
-            System.out.println(cardPlayed.getName() + " a ete joue");
+            res.put("card", chosenCard.getName());
+            System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
         }
         else{

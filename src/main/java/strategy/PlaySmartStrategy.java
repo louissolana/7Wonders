@@ -18,7 +18,7 @@ public class PlaySmartStrategy extends Stragegy {
         color2 = c2;
     }
 
-    public JSONObject action(List<Card> hand)
+    public JSONObject action(List<Card> hand, List<Card> cardPlayed)
     {
         JSONObject res = new JSONObject();
         List<Card> color1Cards = new ArrayList<Card>();
@@ -45,21 +45,23 @@ public class PlaySmartStrategy extends Stragegy {
         {
             Random rand = new Random();
             int nbAlea = rand.nextInt(color1Cards.size());
-            Card cardPlayed = color1Cards.get(nbAlea);
+            Card chosenCard = color1Cards.get(nbAlea);
             res.put("command", "PLAY");
-            res.put("card", cardPlayed.getName());
-            System.out.println(cardPlayed.getName() + " a ete joue");
+            res.put("card", chosenCard.getName());
+            System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
+
+
 
         }
         else if(!color1Card && color2Card)
         {
             Random rand = new Random();
             int nbAlea = rand.nextInt(color2Cards.size());
-            Card cardPlayed = color2Cards.get(nbAlea);
+            Card chosenCard = color2Cards.get(nbAlea);
             res.put("command", "PLAY");
-            res.put("card", cardPlayed.getName());
-            System.out.println(cardPlayed.getName() + " a ete joue");
+            res.put("card", chosenCard.getName());
+            System.out.println(chosenCard.getName() + " a ete joue");
             hand.remove(cardPlayed);
         }
         else{

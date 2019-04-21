@@ -10,7 +10,7 @@ public class DiscardRandomStrategy extends Stragegy {
 
     public DiscardRandomStrategy() {}
 
-    public JSONObject action(List<Card> hand) {
+    public JSONObject action(List<Card> hand, List<Card> cardPlayed) {
         Random rand = new Random();
         int nbAlea = rand.nextInt(hand.size());
         Card sacrificed = hand.get(nbAlea);
