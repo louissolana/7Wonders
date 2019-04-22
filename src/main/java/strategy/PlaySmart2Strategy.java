@@ -216,7 +216,7 @@ public class PlaySmart2Strategy extends Stragegy{
             hand.remove(cardPlayed);
             cardPlayed.add(chosenCard);
         }
-        else if (!color1Card && !color2Card && !color3Card && color4Card && !color5Card && color6Card)
+        else if (!color1Card && !color2Card && !color3Card && !color4Card && !color5Card && color6Card)
         {
             Random rand = new Random();
             int nbAlea = rand.nextInt(color6Cards.size());
