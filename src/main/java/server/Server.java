@@ -81,6 +81,11 @@ public class Server {
 
             }
         });
+        server.addEventListener("new_age", String.class, new DataListener<String>() {
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+
+            }
+        });
     }
     
     private List<JSONArray> generateHands(int players) {

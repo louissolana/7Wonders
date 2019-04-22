@@ -155,6 +155,7 @@ public class Client {
                             System.out.println("[CLIENT" + id + "] "+ player.getHand().get(0).getName() + " a ete defausse");
                             player.getHand().remove(0);
                             System.out.println("Fin de l'âge !");
+
                         }
                     }
 
