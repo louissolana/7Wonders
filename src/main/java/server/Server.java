@@ -82,7 +82,21 @@ public class Server {
             }
         });
         server.addEventListener("new_age", String.class, new DataListener<String>() {
-            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
+            public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception
+            {
+                // Modifier en conséquence :
+                JSONParser parser = new JSONParser();
+                try {
+                    JSONObject object = (JSONObject)parser.parse(s);
+                    Long id = (Long)object.get("id");
+                    updateMap(id, socketIOClient);
+                    List<JSONArray> hands = generateHands(4);
+                    socketIOClient.sendEvent("initial", id, hands.get(counter).toString());
+                    counter++;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
