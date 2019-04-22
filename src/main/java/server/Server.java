@@ -78,6 +78,7 @@ public class Server {
                 JSONArray handToSend = (JSONArray)object.get("hand");
                 System.out.println("[SERVER]id, next id: " + id + ", " + (id+1)%4);
                 connections.get((id+1)%4).sendEvent("next_turn", (id+1)%4, handToSend.toString());
+
             }
         });
     }

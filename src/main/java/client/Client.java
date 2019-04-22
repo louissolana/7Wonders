@@ -140,10 +140,10 @@ public class Client {
             socket.on("next_turn", new Emitter.Listener() {
                 public void call(Object... objects) {
                     if((Integer)objects[0] == id) {
-                        System.out.println("[CLIENT" + id + "] New hand received: " + objects[1]);
 
                         if(player.getHand().size() > 1)
                         {
+                            System.out.println("[CLIENT" + id + "] New hand received: " + objects[1]);
                             JSONObject toSend = stragegy.action(player.getHand(), player.getCardsPlayed());
                             toSend.put("id", getId());
                             System.out.println("[CLIENT"+id+"] message envoye: " + toSend.toString());
@@ -151,9 +151,10 @@ public class Client {
                         }
                         else
                         {
-                            System.out.println("Fin de l'âge ! ");
                             // Discard la dernière carte non utilisée puis remplir les listes avec les cartes de l'âge 2.
-
+                            System.out.println("[CLIENT" + id + "] "+ player.getHand().get(0).getName() + " a ete defausse");
+                            player.getHand().remove(0);
+                            System.out.println("Fin de l'âge !");
                         }
                     }
 
