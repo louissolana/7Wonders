@@ -1,6 +1,7 @@
 package strategy;
 
 import game.Card;
+import game.Type;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ScientistMilitaryStrategy extends Stragegy
         {
             String type = oneCard.getType().toString();
             String name = oneCard.getName();
-            if(type == "SCIENCE")
+            if(oneCard.getType().equals(Type.SCIENCE))
             {
                 scientist = true;
                 scientistCards.add(oneCard);

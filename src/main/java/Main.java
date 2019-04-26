@@ -3,10 +3,7 @@ import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketConfig;
 import game.*;
 import server.Server;
-import strategy.DiscardRandomStrategy;
-import strategy.DiscardStrategy;
-import strategy.PlaySmartStrategy;
-import strategy.Stragegy;
+import strategy.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,8 +137,8 @@ public class Main {
 
         Stragegy discard = new DiscardStrategy();
         final Stragegy rndDiscard = new DiscardRandomStrategy();
-        final Stragegy scientistMilitary = new PlaySmartStrategy(Type.SCIENCE, Type.MILITARY);
-        final Stragegy socialMilitary = new PlaySmartStrategy(Type.SOCIAL, Type.MILITARY);
+        final Stragegy scientistMilitary = new PlaySmart2Strategy(Type.SCIENCE, Type.MILITARY);
+        final Stragegy socialMilitary = new PlaySmart2Strategy(Type.SOCIAL, Type.MILITARY);
 
 
         new Thread(r).start();
