@@ -30,7 +30,7 @@ public class Generator {
 
             for(Object o: infos) {
                 JSONObject jo = (JSONObject) o;
-                if(Integer.parseInt((String)jo.get("player")) <= players) {
+                if( (Integer.parseInt((String)jo.get("player")) <= players) && (Integer.parseInt((String)jo.get("age")) == 1) ) {
                     String cardName = (String)jo.get("name");
                     String type = (String)jo.get("type");
                     Type cardType = null;
