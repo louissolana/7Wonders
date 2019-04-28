@@ -137,9 +137,8 @@ public class Main {
 
         Stragegy discard = new DiscardStrategy();
         final Stragegy rndDiscard = new DiscardRandomStrategy();
-        final Stragegy scientistMilitary = new PlaySmart2Strategy(Type.SCIENCE, Type.MILITARY);
-        final Stragegy socialMilitary = new PlaySmart2Strategy(Type.SOCIAL, Type.MILITARY);
-
+        final Stragegy scientistMilitary = new PlaySmartStrategy(Type.SCIENCE, Type.MILITARY);
+        final Stragegy socialMilitary = new PlaySmartStrategy(Type.SOCIAL, Type.MILITARY);
 
         new Thread(r).start();
 

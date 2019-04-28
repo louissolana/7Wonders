@@ -20,7 +20,15 @@ public class Generator {
         players = p;
     }
 
-    public List<Card> generateCards() {
+    public int getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(int players) {
+		this.players = players;
+	}
+
+	public List<Card> generateCards() {
         List<Card> deck = new ArrayList<Card>();
         JSONParser parser = new JSONParser();
 

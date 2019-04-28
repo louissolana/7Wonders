@@ -1,27 +1,27 @@
 package game;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class BoardTest {
-    Board b1;
-    List<Cost> map;
-
-
-    @Test
-    public void testBoard() {
-        map = new ArrayList<Cost>();
-        map.add(new Cost(Resources.CLAY, 2));
-
-        b1 = new Board("Pharos", Resources.STONE);
-
-        assertEquals(b1.getName(), "Pharos");
-        assertEquals(b1.getBoardResource(), Resources.STONE);
+public class BoardTest {
+	
+	private Board b1;
+	
+	@Before
+    public void setUp() throws Exception {
+		b1 = new Board("Pharos", Resources.STONE);
     }
+	
+	@Test
+	public void testBoard() {
+	    assertEquals(b1.getName(), "Pharos");
+	    assertEquals(b1.getBoardResource(), Resources.STONE);
+	}
+
+	@Test
+	public void testToString() {
+        assertEquals(b1.toString(),"Wonder: Pharos\nOwn resource: STONE\n");
+}
+
 }

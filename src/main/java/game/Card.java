@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
+//import org.json.JSONObject;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -29,8 +30,7 @@ public class Card {
     	obj.put("age", ""+age);
         JSONArray costs = new JSONArray();
     	if (cost != null) {
-            for (Cost c: cost
-                 ) {
+            for (Cost c: cost) {
                 JSONObject o = new JSONObject();
                 o.put("res", Resources.parseResource(c.getRes())+"_"+c.getQuant());
                 costs.add(o);

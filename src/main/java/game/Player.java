@@ -44,7 +44,9 @@ public class Player {
 		return cardsPlayed;
 	}
 
-
+    public int getGold(){
+    	return gold;
+    }
 
 	public Map<Resources, Integer> getResources() {
 		return resources;
